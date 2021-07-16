@@ -1,5 +1,5 @@
---- NonFixedSrc/com/mojang/minecraft/Minecraft.java	2021-07-15 16:15:41.771539100 +0200
-+++ FixedSrc/com/mojang/minecraft/Minecraft.java	2021-07-16 10:51:11.910525900 +0200
+--- Old/com/mojang/minecraft/Minecraft.java	2021-07-16 13:37:10.656459600 +0200
++++ New/com/mojang/minecraft/Minecraft.java	2021-07-16 13:42:31.804964400 +0200
 @@ -1,23 +1,14 @@
  package com.mojang.minecraft;
  
@@ -81,28 +81,33 @@
           }
  
 -         if (Keyboard.getEventKey() == 2) {
+-            this.paintTexture = 1;
 +         if (Keyboard.getEventKey() == Keyboard.KEY_1) {
-             this.paintTexture = 1;
++            this.paintTexture = Tile.rock.id;
           }
  
 -         if (Keyboard.getEventKey() == 3) {
+-            this.paintTexture = 3;
 +         if (Keyboard.getEventKey() == Keyboard.KEY_2) {
-             this.paintTexture = 3;
++            this.paintTexture = Tile.dirt.id;
           }
  
 -         if (Keyboard.getEventKey() == 4) {
+-            this.paintTexture = 4;
 +         if (Keyboard.getEventKey() == Keyboard.KEY_3) {
-             this.paintTexture = 4;
++            this.paintTexture = Tile.stoneBrick.id;
           }
  
 -         if (Keyboard.getEventKey() == 5) {
+-            this.paintTexture = 5;
 +         if (Keyboard.getEventKey() == Keyboard.KEY_4) {
-             this.paintTexture = 5;
++            this.paintTexture = Tile.wood.id;
           }
  
 -         if (Keyboard.getEventKey() == 7) {
+-            this.paintTexture = 6;
 +         if (Keyboard.getEventKey() == Keyboard.KEY_6) {
-             this.paintTexture = 6;
++            this.paintTexture = Tile.bush.id;
           }
  
 -         if (Keyboard.getEventKey() == 21) {
