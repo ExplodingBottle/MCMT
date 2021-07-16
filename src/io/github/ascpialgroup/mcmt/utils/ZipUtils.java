@@ -15,6 +15,7 @@ public class ZipUtils {
 			if (currentEntry.isDirectory()) {
 				new File(folder, currentEntry.getName()).mkdirs();
 			} else {
+				new File(folder, currentEntry.getName()).getParentFile().mkdirs();
 				FileOutputStream fos = new FileOutputStream(new File(folder, currentEntry.getName()));
 				byte[] buffer = new byte[2048];
 				int readed;
