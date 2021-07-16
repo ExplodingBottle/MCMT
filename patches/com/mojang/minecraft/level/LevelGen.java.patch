@@ -1,0 +1,41 @@
+--- NonFixedSrc/com/mojang/minecraft/level/LevelGen.java	2021-07-15 16:15:41.769544200 +0200
++++ FixedSrc/com/mojang/minecraft/level/LevelGen.java	2021-07-16 10:39:12.656396600 +0200
+@@ -71,8 +71,8 @@
+       x = w * h * d / 256 / 64;
+ 
+       for(y = 0; y < x; ++y) {
+-         float x = this.random.nextFloat() * (float)w;
+-         float y = this.random.nextFloat() * (float)d;
++         float x2 = this.random.nextFloat() * (float)w;
++         float y2 = this.random.nextFloat() * (float)d;
+          float z = this.random.nextFloat() * (float)h;
+          length = (int)(this.random.nextFloat() + this.random.nextFloat() * 150.0F);
+          float dir1 = (float)((double)this.random.nextFloat() * 3.141592653589793D * 2.0D);
+@@ -81,9 +81,9 @@
+          float dira2 = 0.0F;
+ 
+          for(int l = 0; l < length; ++l) {
+-            x = (float)((double)x + Math.sin((double)dir1) * Math.cos((double)dir2));
++            x2 = (float)((double)x2 + Math.sin((double)dir1) * Math.cos((double)dir2));
+             z = (float)((double)z + Math.cos((double)dir1) * Math.cos((double)dir2));
+-            y = (float)((double)y + Math.sin((double)dir2));
++            y2 = (float)((double)y2 + Math.sin((double)dir2));
+             dir1 += dira1 * 0.2F;
+             dira1 *= 0.9F;
+             dira1 += this.random.nextFloat() - this.random.nextFloat();
+@@ -93,11 +93,11 @@
+             dira2 += this.random.nextFloat() - this.random.nextFloat();
+             float size = (float)(Math.sin((double)l * 3.141592653589793D / (double)length) * 2.5D + 1.0D);
+ 
+-            for(int xx = (int)(x - size); xx <= (int)(x + size); ++xx) {
+-               for(int yy = (int)(y - size); yy <= (int)(y + size); ++yy) {
++            for(int xx = (int)(x2 - size); xx <= (int)(x2 + size); ++xx) {
++               for(int yy = (int)(y2 - size); yy <= (int)(y2 + size); ++yy) {
+                   for(int zz = (int)(z - size); zz <= (int)(z + size); ++zz) {
+-                     float xd = (float)xx - x;
+-                     float yd = (float)yy - y;
++                     float xd = (float)xx - x2;
++                     float yd = (float)yy - y2;
+                      float zd = (float)zz - z;
+                      float dd = xd * xd + yd * yd * 2.0F + zd * zd;
+                      if (dd < size * size && xx >= 1 && yy >= 1 && zz >= 1 && xx < this.width - 1 && yy < this.depth - 1 && zz < this.height - 1) {

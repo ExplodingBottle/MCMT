@@ -1,0 +1,36 @@
+--- NonFixedSrc/com/mojang/minecraft/Player.java	2021-07-15 16:15:41.772536100 +0200
++++ FixedSrc/com/mojang/minecraft/Player.java	2021-07-16 10:45:59.519065900 +0200
+@@ -15,27 +15,27 @@
+       this.zo = this.z;
+       float xa = 0.0F;
+       float ya = 0.0F;
+-      if (Keyboard.isKeyDown(19)) {
++      if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
+          this.resetPos();
+       }
+ 
+-      if (Keyboard.isKeyDown(200) || Keyboard.isKeyDown(17)) {
++      if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)) {
+          --ya;
+       }
+ 
+-      if (Keyboard.isKeyDown(208) || Keyboard.isKeyDown(31)) {
++      if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S)) {
+          ++ya;
+       }
+ 
+-      if (Keyboard.isKeyDown(203) || Keyboard.isKeyDown(30)) {
++      if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A)) {
+          --xa;
+       }
+ 
+-      if (Keyboard.isKeyDown(205) || Keyboard.isKeyDown(32)) {
++      if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_D)) {
+          ++xa;
+       }
+ 
+-      if ((Keyboard.isKeyDown(57) || Keyboard.isKeyDown(219)) && this.onGround) {
++      if ((Keyboard.isKeyDown(Keyboard.KEY_SPACE) || Keyboard.isKeyDown(Keyboard.KEY_LMETA)) && this.onGround) {
+          this.yd = 0.5F;
+       }
+ 

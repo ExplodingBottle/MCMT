@@ -1,0 +1,126 @@
+--- NonFixedSrc/com/mojang/minecraft/Minecraft.java	2021-07-15 16:15:41.771539100 +0200
++++ FixedSrc/com/mojang/minecraft/Minecraft.java	2021-07-16 10:51:11.910525900 +0200
+@@ -1,23 +1,14 @@
+ package com.mojang.minecraft;
+ 
+-import com.mojang.minecraft.character.Zombie;
+-import com.mojang.minecraft.gui.Font;
+-import com.mojang.minecraft.level.Chunk;
+-import com.mojang.minecraft.level.Level;
+-import com.mojang.minecraft.level.LevelRenderer;
+-import com.mojang.minecraft.level.tile.Tile;
+-import com.mojang.minecraft.particle.ParticleEngine;
+-import com.mojang.minecraft.phys.AABB;
+-import com.mojang.minecraft.renderer.Frustum;
+-import com.mojang.minecraft.renderer.Tesselator;
+-import com.mojang.minecraft.renderer.Textures;
+ import java.awt.Canvas;
+ import java.awt.Component;
+ import java.io.IOException;
+ import java.nio.FloatBuffer;
+ import java.nio.IntBuffer;
+ import java.util.ArrayList;
++
+ import javax.swing.JOptionPane;
++
+ import org.lwjgl.BufferUtils;
+ import org.lwjgl.LWJGLException;
+ import org.lwjgl.input.Cursor;
+@@ -28,8 +19,20 @@
+ import org.lwjgl.opengl.GL11;
+ import org.lwjgl.util.glu.GLU;
+ 
++import com.mojang.minecraft.character.Zombie;
++import com.mojang.minecraft.gui.Font;
++import com.mojang.minecraft.level.Chunk;
++import com.mojang.minecraft.level.Level;
++import com.mojang.minecraft.level.LevelRenderer;
++import com.mojang.minecraft.level.tile.Tile;
++import com.mojang.minecraft.particle.ParticleEngine;
++import com.mojang.minecraft.phys.AABB;
++import com.mojang.minecraft.renderer.Frustum;
++import com.mojang.minecraft.renderer.Tesselator;
++import com.mojang.minecraft.renderer.Textures;
++
+ public class Minecraft implements Runnable {
+-   public static final String VERSION_STRING = "0.0.11a";
++   public static final String VERSION_STRING = "0.0.11a/Modded with MCMT";
+    private boolean fullscreen = false;
+    private int width;
+    private int height;
+@@ -41,7 +44,7 @@
+    private Player player;
+    private int paintTexture = 1;
+    private ParticleEngine particleEngine;
+-   private ArrayList entities = new ArrayList();
++   private ArrayList<Entity> entities = new ArrayList<>();
+    private Canvas parent;
+    public boolean appletMode = false;
+    public volatile boolean pause = false;
+@@ -86,7 +89,7 @@
+          Display.setDisplayMode(new DisplayMode(this.width, this.height));
+       }
+ 
+-      Display.setTitle("Minecraft 0.0.11a");
++      Display.setTitle("Minecraft " + VERSION_STRING);
+ 
+       try {
+          Display.create();
+@@ -330,39 +333,39 @@
+             }
+          } while(!Keyboard.getEventKeyState());
+ 
+-         if (Keyboard.getEventKey() == 1 && (this.appletMode || !this.fullscreen)) {
++         if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE && (this.appletMode || !this.fullscreen)) {
+             this.releaseMouse();
+          }
+ 
+-         if (Keyboard.getEventKey() == 28) {
++         if (Keyboard.getEventKey() == Keyboard.KEY_RETURN) {
+             this.level.save();
+          }
+ 
+-         if (Keyboard.getEventKey() == 2) {
++         if (Keyboard.getEventKey() == Keyboard.KEY_1) {
+             this.paintTexture = 1;
+          }
+ 
+-         if (Keyboard.getEventKey() == 3) {
++         if (Keyboard.getEventKey() == Keyboard.KEY_2) {
+             this.paintTexture = 3;
+          }
+ 
+-         if (Keyboard.getEventKey() == 4) {
++         if (Keyboard.getEventKey() == Keyboard.KEY_3) {
+             this.paintTexture = 4;
+          }
+ 
+-         if (Keyboard.getEventKey() == 5) {
++         if (Keyboard.getEventKey() == Keyboard.KEY_4) {
+             this.paintTexture = 5;
+          }
+ 
+-         if (Keyboard.getEventKey() == 7) {
++         if (Keyboard.getEventKey() == Keyboard.KEY_6) {
+             this.paintTexture = 6;
+          }
+ 
+-         if (Keyboard.getEventKey() == 21) {
++         if (Keyboard.getEventKey() == Keyboard.KEY_Y) {
+             this.yMouseAxis *= -1;
+          }
+ 
+-         if (Keyboard.getEventKey() == 34) {
++         if (Keyboard.getEventKey() == Keyboard.KEY_G) {
+             this.entities.add(new Zombie(this.level, this.textures, this.player.x, this.player.y, this.player.z));
+          }
+       }
+@@ -559,7 +562,7 @@
+       GL11.glDisable(3553);
+       GL11.glPopMatrix();
+       this.checkGlError("GUI: Draw selected");
+-      this.font.drawShadow("0.0.11a", 2, 2, 16777215);
++      this.font.drawShadow(Minecraft.VERSION_STRING, 2, 2, 16777215);
+       this.font.drawShadow(this.fpsString, 2, 12, 16777215);
+       this.checkGlError("GUI: Draw text");
+       int wc = screenWidth / 2;

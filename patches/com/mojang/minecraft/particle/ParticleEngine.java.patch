@@ -1,0 +1,11 @@
+--- NonFixedSrc/com/mojang/minecraft/particle/ParticleEngine.java	2021-07-15 16:15:41.772536100 +0200
++++ FixedSrc/com/mojang/minecraft/particle/ParticleEngine.java	2021-07-16 10:39:12.662379700 +0200
+@@ -10,7 +10,7 @@
+ 
+ public class ParticleEngine {
+    protected Level level;
+-   private List particles = new ArrayList();
++   private List<Particle> particles = new ArrayList<>();
+    private Textures textures;
+ 
+    public ParticleEngine(Level level, Textures textures) {

@@ -1,0 +1,13 @@
+--- NonFixedSrc/com/mojang/minecraft/server/MinecraftServer.java	2021-07-15 16:15:41.774532600 +0200
++++ FixedSrc/com/mojang/minecraft/server/MinecraftServer.java	2021-07-16 10:39:12.666369100 +0200
+@@ -11,8 +11,8 @@
+ 
+ public class MinecraftServer implements Runnable, ServerListener {
+    private SocketServer socketServer;
+-   private Map clientMap = new HashMap();
+-   private List clients = new ArrayList();
++   private Map<SocketConnection, Client> clientMap = new HashMap<>();
++   private List<Client> clients = new ArrayList<>();
+ 
+    public MinecraftServer(byte[] ips, int port) throws IOException {
+       this.socketServer = new SocketServer(ips, port, this);

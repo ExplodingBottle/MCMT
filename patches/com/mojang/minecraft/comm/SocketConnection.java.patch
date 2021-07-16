@@ -1,0 +1,11 @@
+--- NonFixedSrc/com/mojang/minecraft/comm/SocketConnection.java	2021-07-15 16:15:41.767549800 +0200
++++ FixedSrc/com/mojang/minecraft/comm/SocketConnection.java	2021-07-16 10:39:12.649415500 +0200
+@@ -19,7 +19,7 @@
+    private ConnectionListener connectionListener;
+    private int bytesRead;
+    private int totalBytesWritten;
+-   private int maxBlocksPerIteration = 3;
++   private int maxBlocksPerIteration = 3; // Not sure where to place this variable.
+    private Socket socket;
+    private BufferedInputStream in;
+    private BufferedOutputStream out;

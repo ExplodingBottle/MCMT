@@ -1,0 +1,11 @@
+--- NonFixedSrc/com/mojang/minecraft/comm/SocketServer.java	2021-07-15 16:15:41.767549800 +0200
++++ FixedSrc/com/mojang/minecraft/comm/SocketServer.java	2021-07-16 10:39:12.650411600 +0200
+@@ -13,7 +13,7 @@
+ public class SocketServer {
+    private ServerSocketChannel ssc;
+    private ServerListener serverListener;
+-   private List connections = new LinkedList();
++   private List<SocketConnection> connections = new LinkedList<>();
+    protected static Logger logger = Logger.getLogger("SocketServer");
+ 
+    public SocketServer(byte[] ips, int port, ServerListener serverListener) throws IOException {

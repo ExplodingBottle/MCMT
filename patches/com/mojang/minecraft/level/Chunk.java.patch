@@ -1,0 +1,13 @@
+--- NonFixedSrc/com/mojang/minecraft/level/Chunk.java	2021-07-15 16:15:41.768546800 +0200
++++ FixedSrc/com/mojang/minecraft/level/Chunk.java	2021-07-16 10:39:12.653405700 +0200
+@@ -23,8 +23,8 @@
+    public long dirtiedTime = 0L;
+    private static Tesselator t;
+    public static int updates;
+-   private static long totalTime;
+-   private static int totalUpdates;
++   private static long totalTime; // Not sure where to place this variable.
++   private static int totalUpdates; // Not sure where to place this variable.
+ 
+    static {
+       t = Tesselator.instance;

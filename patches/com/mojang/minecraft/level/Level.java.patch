@@ -1,0 +1,33 @@
+--- NonFixedSrc/com/mojang/minecraft/level/Level.java	2021-07-15 16:15:41.769544200 +0200
++++ FixedSrc/com/mojang/minecraft/level/Level.java	2021-07-16 10:39:12.655400300 +0200
+@@ -19,7 +19,7 @@
+    public final int depth;
+    private byte[] blocks;
+    private int[] lightDepths;
+-   private ArrayList levelListeners = new ArrayList();
++   private ArrayList<LevelListener> levelListeners = new ArrayList<>();
+    private Random random = new Random();
+    int unprocessed = 0;
+ 
+@@ -102,8 +102,8 @@
+       return tile == null ? false : tile.blocksLight();
+    }
+ 
+-   public ArrayList getCubes(AABB aABB) {
+-      ArrayList aABBs = new ArrayList();
++   public ArrayList<AABB> getCubes(AABB aABB) {
++      ArrayList<AABB> aABBs = new ArrayList<>();
+       int x0 = (int)aABB.x0;
+       int x1 = (int)(aABB.x1 + 1.0F);
+       int y0 = (int)aABB.y0;
+@@ -189,8 +189,8 @@
+ 
+    public void tick() {
+       this.unprocessed += this.width * this.height * this.depth;
+-      int ticks = this.unprocessed / 400;
+-      this.unprocessed -= ticks * 400;
++      int ticks = this.unprocessed / TILE_UPDATE_INTERVAL;
++      this.unprocessed -= ticks * TILE_UPDATE_INTERVAL;
+ 
+       for(int i = 0; i < ticks; ++i) {
+          int x = this.random.nextInt(this.width);
