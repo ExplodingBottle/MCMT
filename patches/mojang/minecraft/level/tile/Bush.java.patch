@@ -1,0 +1,13 @@
+--- Old/com/mojang/minecraft/level/tile/Bush.java	2021-07-17 13:57:44.451280200 +0200
++++ New/com/mojang/minecraft/level/tile/Bush.java	2021-07-17 14:44:27.082708800 +0200
+@@ -30,8 +30,8 @@
+          t.color(1.0F, 1.0F, 1.0F);
+ 
+          for(int r = 0; r < rots; ++r) {
+-            float xa = (float)(Math.sin((double)r * 3.141592653589793D / (double)rots + 0.7853981633974483D) * 0.5D);
+-            float za = (float)(Math.cos((double)r * 3.141592653589793D / (double)rots + 0.7853981633974483D) * 0.5D);
++            float xa = (float)(Math.sin((double)r * Math.PI / (double)rots + 0.7853981633974483D) * 0.5D);
++            float za = (float)(Math.cos((double)r * Math.PI / (double)rots + 0.7853981633974483D) * 0.5D);
+             float x0 = (float)x + 0.5F - xa;
+             float x1 = (float)x + 0.5F + xa;
+             float y0 = (float)y + 0.0F;

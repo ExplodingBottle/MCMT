@@ -1,5 +1,5 @@
---- NonFixedSrc/com/mojang/minecraft/Timer.java	2021-07-15 16:15:41.774532600 +0200
-+++ FixedSrc/com/mojang/minecraft/Timer.java	2021-07-16 10:39:12.668363700 +0200
+--- Old/com/mojang/minecraft/Timer.java	2021-07-17 13:57:44.529395100 +0200
++++ New/com/mojang/minecraft/Timer.java	2021-07-17 13:58:44.020310400 +0200
 @@ -1,8 +1,8 @@
  package com.mojang.minecraft;
  

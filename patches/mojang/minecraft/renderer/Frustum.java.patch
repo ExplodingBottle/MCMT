@@ -1,0 +1,13 @@
+--- Old/com/mojang/minecraft/renderer/Frustum.java	2021-07-17 13:57:44.482523400 +0200
++++ New/com/mojang/minecraft/renderer/Frustum.java	2021-07-17 14:19:16.067028800 +0200
+@@ -45,8 +45,8 @@
+       this._proj.clear();
+       this._modl.clear();
+       this._clip.clear();
+-      GL11.glGetFloat(2983, this._proj);
+-      GL11.glGetFloat(2982, this._modl);
++      GL11.glGetFloat(GL11.GL_PROJECTION_MATRIX, this._proj);
++      GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, this._modl);
+       this._proj.flip().limit(16);
+       this._proj.get(this.proj);
+       this._modl.flip().limit(16);

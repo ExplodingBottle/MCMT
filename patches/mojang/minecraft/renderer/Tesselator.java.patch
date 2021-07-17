@@ -1,0 +1,68 @@
+--- Old/com/mojang/minecraft/renderer/Tesselator.java	2021-07-17 13:57:44.482523400 +0200
++++ New/com/mojang/minecraft/renderer/Tesselator.java	2021-07-17 14:10:20.712997800 +0200
+@@ -6,9 +6,9 @@
+ 
+ public class Tesselator {
+    private static final int MAX_MEMORY_USE = 4194304;
+-   private static final int MAX_FLOATS = 524288;
+-   private FloatBuffer buffer = BufferUtils.createFloatBuffer(524288);
+-   private float[] array = new float[524288];
++   private static final int MAX_FLOATS = MAX_MEMORY_USE / 8;
++   private FloatBuffer buffer = BufferUtils.createFloatBuffer(MAX_FLOATS);
++   private float[] array = new float[MAX_FLOATS];
+    private int vertices = 0;
+    private float u;
+    private float v;
+@@ -31,32 +31,32 @@
+          this.buffer.put(this.array, 0, this.p);
+          this.buffer.flip();
+          if (this.hasTexture && this.hasColor) {
+-            GL11.glInterleavedArrays(10794, 0, (FloatBuffer)this.buffer);
++            GL11.glInterleavedArrays(GL11.GL_T2F_C3F_V3F, 0, (FloatBuffer)this.buffer);
+          } else if (this.hasTexture) {
+-            GL11.glInterleavedArrays(10791, 0, (FloatBuffer)this.buffer);
++            GL11.glInterleavedArrays(GL11.GL_T2F_V3F, 0, (FloatBuffer)this.buffer);
+          } else if (this.hasColor) {
+-            GL11.glInterleavedArrays(10788, 0, (FloatBuffer)this.buffer);
++            GL11.glInterleavedArrays(GL11.GL_C3F_V3F, 0, (FloatBuffer)this.buffer);
+          } else {
+-            GL11.glInterleavedArrays(10785, 0, (FloatBuffer)this.buffer);
++            GL11.glInterleavedArrays(GL11.GL_V3F, 0, (FloatBuffer)this.buffer);
+          }
+ 
+-         GL11.glEnableClientState(32884);
++         GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+          if (this.hasTexture) {
+-            GL11.glEnableClientState(32888);
++            GL11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+          }
+ 
+          if (this.hasColor) {
+-            GL11.glEnableClientState(32886);
++            GL11.glEnableClientState(GL11.GL_COLOR_ARRAY);
+          }
+ 
+-         GL11.glDrawArrays(7, 0, this.vertices);
+-         GL11.glDisableClientState(32884);
++         GL11.glDrawArrays(GL11.GL_QUADS, 0, this.vertices);
++         GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+          if (this.hasTexture) {
+-            GL11.glDisableClientState(32888);
++            GL11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+          }
+ 
+          if (this.hasColor) {
+-            GL11.glDisableClientState(32886);
++            GL11.glDisableClientState(GL11.GL_COLOR_ARRAY);
+          }
+       }
+ 
+@@ -120,7 +120,7 @@
+       this.array[this.p++] = y;
+       this.array[this.p++] = z;
+       ++this.vertices;
+-      if (this.vertices % 4 == 0 && this.p >= 524288 - this.len * 4) {
++      if (this.vertices % 4 == 0 && this.p >= MAX_FLOATS - this.len * 4) {
+          this.flush();
+       }
+ 

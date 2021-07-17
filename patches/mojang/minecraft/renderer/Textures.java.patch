@@ -1,0 +1,33 @@
+--- Old/com/mojang/minecraft/renderer/Textures.java	2021-07-17 13:57:44.482523400 +0200
++++ New/com/mojang/minecraft/renderer/Textures.java	2021-07-17 14:17:13.787774200 +0200
+@@ -11,7 +11,7 @@
+ import org.lwjgl.util.glu.GLU;
+ 
+ public class Textures {
+-   private HashMap idMap = new HashMap();
++   private HashMap<String, Integer> idMap = new HashMap<>();
+ 
+    public int loadTexture(String resourceName, int mode) {
+       try {
+@@ -24,9 +24,9 @@
+             int id = ib.get(0);
+             this.idMap.put(resourceName, id);
+             System.out.println(resourceName + " -> " + id);
+-            GL11.glBindTexture(3553, id);
+-            GL11.glTexParameteri(3553, 10241, mode);
+-            GL11.glTexParameteri(3553, 10240, mode);
++            GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
++            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, mode);
++            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, mode);
+             BufferedImage img = ImageIO.read(Textures.class.getResourceAsStream(resourceName));
+             int w = img.getWidth();
+             int h = img.getHeight();
+@@ -43,7 +43,7 @@
+             }
+ 
+             pixels.asIntBuffer().put(rawPixels);
+-            GLU.gluBuild2DMipmaps(3553, 6408, w, h, 6408, 5121, pixels);
++            GLU.gluBuild2DMipmaps(GL11.GL_TEXTURE_2D, GL11.GL_RGBA, w, h, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, pixels);
+             return id;
+          }
+       } catch (IOException var15) {

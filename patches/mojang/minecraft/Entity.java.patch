@@ -1,0 +1,22 @@
+--- Old/com/mojang/minecraft/Entity.java	2021-07-17 13:57:44.396347600 +0200
++++ New/com/mojang/minecraft/Entity.java	2021-07-17 14:45:04.644124200 +0200
+@@ -77,7 +77,7 @@
+       float xaOrg = xa;
+       float yaOrg = ya;
+       float zaOrg = za;
+-      List aABBs = this.level.getCubes(this.bb.expand(xa, ya, za));
++      List<AABB> aABBs = this.level.getCubes(this.bb.expand(xa, ya, za));
+ 
+       int i;
+       for(i = 0; i < aABBs.size(); ++i) {
+@@ -121,8 +121,8 @@
+          dist = speed / (float)Math.sqrt((double)dist);
+          xa *= dist;
+          za *= dist;
+-         float sin = (float)Math.sin((double)this.yRot * 3.141592653589793D / 180.0D);
+-         float cos = (float)Math.cos((double)this.yRot * 3.141592653589793D / 180.0D);
++         float sin = (float)Math.sin((double)this.yRot * Math.PI / 180.0D);
++         float cos = (float)Math.cos((double)this.yRot * Math.PI / 180.0D);
+          this.xd += xa * cos - za * sin;
+          this.zd += za * cos + xa * sin;
+       }

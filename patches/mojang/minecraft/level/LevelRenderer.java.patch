@@ -1,0 +1,138 @@
+--- Old/com/mojang/minecraft/level/LevelRenderer.java	2021-07-17 13:57:44.451280200 +0200
++++ New/com/mojang/minecraft/level/LevelRenderer.java	2021-07-17 14:32:37.104365900 +0200
+@@ -26,20 +26,20 @@
+       this.level = level;
+       this.textures = textures;
+       level.addListener(this);
+-      this.xChunks = level.width / 16;
+-      this.yChunks = level.depth / 16;
+-      this.zChunks = level.height / 16;
++      this.xChunks = level.width / CHUNK_SIZE;
++      this.yChunks = level.depth / CHUNK_SIZE;
++      this.zChunks = level.height / CHUNK_SIZE;
+       this.chunks = new Chunk[this.xChunks * this.yChunks * this.zChunks];
+ 
+       for(int x = 0; x < this.xChunks; ++x) {
+          for(int y = 0; y < this.yChunks; ++y) {
+             for(int z = 0; z < this.zChunks; ++z) {
+-               int x0 = x * 16;
+-               int y0 = y * 16;
+-               int z0 = z * 16;
+-               int x1 = (x + 1) * 16;
+-               int y1 = (y + 1) * 16;
+-               int z1 = (z + 1) * 16;
++               int x0 = x * CHUNK_SIZE;
++               int y0 = y * CHUNK_SIZE;
++               int z0 = z * CHUNK_SIZE;
++               int x1 = (x + 1) * CHUNK_SIZE;
++               int y1 = (y + 1) * CHUNK_SIZE;
++               int z1 = (z + 1) * CHUNK_SIZE;
+                if (x1 > level.width) {
+                   x1 = level.width;
+                }
+@@ -59,14 +59,14 @@
+ 
+    }
+ 
+-   public List getAllDirtyChunks() {
+-      ArrayList dirty = null;
++   public List<Chunk> getAllDirtyChunks() {
++      ArrayList<Chunk> dirty = null;
+ 
+       for(int i = 0; i < this.chunks.length; ++i) {
+          Chunk chunk = this.chunks[i];
+          if (chunk.isDirty()) {
+             if (dirty == null) {
+-               dirty = new ArrayList();
++               dirty = new ArrayList<Chunk>();
+             }
+ 
+             dirty.add(chunk);
+@@ -77,9 +77,9 @@
+    }
+ 
+    public void render(Player player, int layer) {
+-      GL11.glEnable(3553);
+-      int id = this.textures.loadTexture("/terrain.png", 9728);
+-      GL11.glBindTexture(3553, id);
++      GL11.glEnable(GL11.GL_TEXTURE_2D);
++      int id = this.textures.loadTexture("/terrain.png", GL11.GL_NEAREST);
++      GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
+       Frustum frustum = Frustum.getFrustum();
+ 
+       for(int i = 0; i < this.chunks.length; ++i) {
+@@ -88,15 +88,15 @@
+          }
+       }
+ 
+-      GL11.glDisable(3553);
++      GL11.glDisable(GL11.GL_TEXTURE_2D);
+    }
+ 
+    public void updateDirtyChunks(Player player) {
+-      List dirty = this.getAllDirtyChunks();
++      List<Chunk> dirty = this.getAllDirtyChunks();
+       if (dirty != null) {
+          Collections.sort(dirty, new DirtyChunkSorter(player, Frustum.getFrustum()));
+ 
+-         for(int i = 0; i < 8 && i < dirty.size(); ++i) {
++         for(int i = 0; i < MAX_REBUILDS_PER_FRAME && i < dirty.size(); ++i) {
+             ((Chunk)dirty.get(i)).rebuild();
+          }
+ 
+@@ -154,8 +154,8 @@
+ 
+    public void renderHit(HitResult h, int mode, int tileType) {
+       Tesselator t = Tesselator.instance;
+-      GL11.glEnable(3042);
+-      GL11.glBlendFunc(770, 1);
++      GL11.glEnable(GL11.GL_BLEND);
++      GL11.glBlendFunc(GL11.GL_SRC_ALPHA, 1);
+       GL11.glColor4f(1.0F, 1.0F, 1.0F, ((float)Math.sin((double)System.currentTimeMillis() / 100.0D) * 0.2F + 0.4F) * 0.5F);
+       if (mode == 0) {
+          t.init();
+@@ -166,12 +166,12 @@
+ 
+          t.flush();
+       } else {
+-         GL11.glBlendFunc(770, 771);
++         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, 771);
+          float br = (float)Math.sin((double)System.currentTimeMillis() / 100.0D) * 0.2F + 0.8F;
+          GL11.glColor4f(br, br, br, (float)Math.sin((double)System.currentTimeMillis() / 200.0D) * 0.2F + 0.5F);
+-         GL11.glEnable(3553);
+-         int id = this.textures.loadTexture("/terrain.png", 9728);
+-         GL11.glBindTexture(3553, id);
++         GL11.glEnable(GL11.GL_TEXTURE_2D);
++         int id = this.textures.loadTexture("/terrain.png", GL11.GL_NEAREST);
++         GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
+          int x = h.x;
+          int y = h.y;
+          int z = h.z;
+@@ -204,19 +204,19 @@
+          Tile.tiles[tileType].render(t, this.level, 0, x, y, z);
+          Tile.tiles[tileType].render(t, this.level, 1, x, y, z);
+          t.flush();
+-         GL11.glDisable(3553);
++         GL11.glDisable(GL11.GL_TEXTURE_2D);
+       }
+ 
+-      GL11.glDisable(3042);
++      GL11.glDisable(GL11.GL_BLEND);
+    }
+ 
+    public void setDirty(int x0, int y0, int z0, int x1, int y1, int z1) {
+-      x0 /= 16;
+-      x1 /= 16;
+-      y0 /= 16;
+-      y1 /= 16;
+-      z0 /= 16;
+-      z1 /= 16;
++      x0 /= CHUNK_SIZE;
++      x1 /= CHUNK_SIZE;
++      y0 /= CHUNK_SIZE;
++      y1 /= CHUNK_SIZE;
++      z0 /= CHUNK_SIZE;
++      z1 /= CHUNK_SIZE;
+       if (x0 < 0) {
+          x0 = 0;
+       }

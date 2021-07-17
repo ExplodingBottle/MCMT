@@ -1,6 +1,6 @@
---- NonFixedSrc/com/mojang/minecraft/level/LevelGen.java	2021-07-15 16:15:41.769544200 +0200
-+++ FixedSrc/com/mojang/minecraft/level/LevelGen.java	2021-07-16 10:39:12.656396600 +0200
-@@ -71,8 +71,8 @@
+--- Old/com/mojang/minecraft/level/LevelGen.java	2021-07-17 13:57:44.420035000 +0200
++++ New/com/mojang/minecraft/level/LevelGen.java	2021-07-17 14:44:48.492283500 +0200
+@@ -71,19 +71,19 @@
        x = w * h * d / 256 / 64;
  
        for(y = 0; y < x; ++y) {
@@ -10,8 +10,11 @@
 +         float y2 = this.random.nextFloat() * (float)d;
           float z = this.random.nextFloat() * (float)h;
           length = (int)(this.random.nextFloat() + this.random.nextFloat() * 150.0F);
-          float dir1 = (float)((double)this.random.nextFloat() * 3.141592653589793D * 2.0D);
-@@ -81,9 +81,9 @@
+-         float dir1 = (float)((double)this.random.nextFloat() * 3.141592653589793D * 2.0D);
++         float dir1 = (float)((double)this.random.nextFloat() * Math.PI * 2.0D);
+          float dira1 = 0.0F;
+-         float dir2 = (float)((double)this.random.nextFloat() * 3.141592653589793D * 2.0D);
++         float dir2 = (float)((double)this.random.nextFloat() * Math.PI * 2.0D);
           float dira2 = 0.0F;
  
           for(int l = 0; l < length; ++l) {
@@ -23,9 +26,12 @@
              dir1 += dira1 * 0.2F;
              dira1 *= 0.9F;
              dira1 += this.random.nextFloat() - this.random.nextFloat();
-@@ -93,11 +93,11 @@
+@@ -91,13 +91,13 @@
+             dir2 *= 0.5F;
+             dira2 *= 0.9F;
              dira2 += this.random.nextFloat() - this.random.nextFloat();
-             float size = (float)(Math.sin((double)l * 3.141592653589793D / (double)length) * 2.5D + 1.0D);
+-            float size = (float)(Math.sin((double)l * 3.141592653589793D / (double)length) * 2.5D + 1.0D);
++            float size = (float)(Math.sin((double)l * Math.PI / (double)length) * 2.5D + 1.0D);
  
 -            for(int xx = (int)(x - size); xx <= (int)(x + size); ++xx) {
 -               for(int yy = (int)(y - size); yy <= (int)(y + size); ++yy) {

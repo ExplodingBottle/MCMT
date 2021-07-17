@@ -1,0 +1,22 @@
+--- Old/com/mojang/minecraft/gui/Font.java	2021-07-17 13:57:44.396347600 +0200
++++ New/com/mojang/minecraft/gui/Font.java	2021-07-17 14:40:11.072817700 +0200
+@@ -67,8 +67,8 @@
+          color = (color & 16579836) >> 2;
+       }
+ 
+-      GL11.glEnable(3553);
+-      GL11.glBindTexture(3553, this.fontTexture);
++      GL11.glEnable(GL11.GL_TEXTURE_2D);
++      GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.fontTexture);
+       Tesselator t = Tesselator.instance;
+       t.init();
+       t.color(color);
+@@ -102,7 +102,7 @@
+       }
+ 
+       t.flush();
+-      GL11.glDisable(3553);
++      GL11.glDisable(GL11.GL_TEXTURE_2D);
+    }
+ 
+    public int width(String str) {

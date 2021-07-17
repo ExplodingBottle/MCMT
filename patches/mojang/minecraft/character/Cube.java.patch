@@ -1,0 +1,13 @@
+--- Old/com/mojang/minecraft/character/Cube.java	2021-07-17 13:57:44.388353500 +0200
++++ New/com/mojang/minecraft/character/Cube.java	2021-07-17 14:41:33.272998800 +0200
+@@ -79,8 +79,8 @@
+ 
+    private void compile() {
+       this.list = GL11.glGenLists(1);
+-      GL11.glNewList(this.list, 4864);
+-      GL11.glBegin(7);
++      GL11.glNewList(this.list, GL11.GL_COMPILE);
++      GL11.glBegin(GL11.GL_QUADS);
+ 
+       for(int i = 0; i < this.polygons.length; ++i) {
+          this.polygons[i].render();

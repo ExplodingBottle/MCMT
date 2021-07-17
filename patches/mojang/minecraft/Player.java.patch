@@ -1,5 +1,5 @@
---- NonFixedSrc/com/mojang/minecraft/Player.java	2021-07-15 16:15:41.772536100 +0200
-+++ FixedSrc/com/mojang/minecraft/Player.java	2021-07-16 10:45:59.519065900 +0200
+--- Old/com/mojang/minecraft/Player.java	2021-07-17 13:57:44.482523400 +0200
++++ New/com/mojang/minecraft/Player.java	2021-07-17 13:58:44.004646000 +0200
 @@ -15,27 +15,27 @@
        this.zo = this.z;
        float xa = 0.0F;

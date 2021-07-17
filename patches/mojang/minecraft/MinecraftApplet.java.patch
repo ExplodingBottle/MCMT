@@ -1,5 +1,5 @@
---- NonFixedSrc/com/mojang/minecraft/MinecraftApplet.java	2021-07-15 16:15:41.771539100 +0200
-+++ FixedSrc/com/mojang/minecraft/MinecraftApplet.java	2021-07-16 10:39:12.661384300 +0200
+--- Old/com/mojang/minecraft/MinecraftApplet.java	2021-07-17 13:57:44.482523400 +0200
++++ New/com/mojang/minecraft/MinecraftApplet.java	2021-07-17 13:58:44.004646000 +0200
 @@ -5,12 +5,15 @@
  import java.awt.Canvas;
  

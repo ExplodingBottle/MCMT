@@ -1,0 +1,22 @@
+--- Old/com/mojang/minecraft/level/Chunk.java	2021-07-17 13:57:44.396347600 +0200
++++ New/com/mojang/minecraft/level/Chunk.java	2021-07-17 14:38:46.124241700 +0200
+@@ -23,8 +23,8 @@
+    public long dirtiedTime = 0L;
+    private static Tesselator t;
+    public static int updates;
+-   private static long totalTime;
+-   private static int totalUpdates;
++   private static long totalTime; // Not sure where to place this variable.
++   private static int totalUpdates; // Not sure where to place this variable.
+ 
+    static {
+       t = Tesselator.instance;
+@@ -52,7 +52,7 @@
+       this.dirty = false;
+       ++updates;
+       long before = System.nanoTime();
+-      GL11.glNewList(this.lists + layer, 4864);
++      GL11.glNewList(this.lists + layer, GL11.GL_COMPILE);
+       t.init();
+       int tiles = 0;
+ 

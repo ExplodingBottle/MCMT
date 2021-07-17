@@ -1,0 +1,17 @@
+--- Old/com/mojang/minecraft/character/ZombieModel.java	2021-07-17 13:57:44.396347600 +0200
++++ New/com/mojang/minecraft/character/ZombieModel.java	2021-07-17 14:43:59.021613200 +0200
+@@ -29,12 +29,12 @@
+    public void render(float time) {
+       this.head.yRot = (float)Math.sin((double)time * 0.83D) * 1.0F;
+       this.head.xRot = (float)Math.sin((double)time) * 0.8F;
+-      this.arm0.xRot = (float)Math.sin((double)time * 0.6662D + 3.141592653589793D) * 2.0F;
++      this.arm0.xRot = (float)Math.sin((double)time * 0.6662D + Math.PI) * 2.0F;
+       this.arm0.zRot = (float)(Math.sin((double)time * 0.2312D) + 1.0D) * 1.0F;
+       this.arm1.xRot = (float)Math.sin((double)time * 0.6662D) * 2.0F;
+       this.arm1.zRot = (float)(Math.sin((double)time * 0.2812D) - 1.0D) * 1.0F;
+       this.leg0.xRot = (float)Math.sin((double)time * 0.6662D) * 1.4F;
+-      this.leg1.xRot = (float)Math.sin((double)time * 0.6662D + 3.141592653589793D) * 1.4F;
++      this.leg1.xRot = (float)Math.sin((double)time * 0.6662D + Math.PI) * 1.4F;
+       this.head.render();
+       this.body.render();
+       this.arm0.render();
