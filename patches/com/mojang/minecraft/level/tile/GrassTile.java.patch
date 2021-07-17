@@ -1,0 +1,12 @@
+--- Old/com/mojang/minecraft/level/tile/GrassTile.java	2021-07-17 13:57:44.451280200 +0200
++++ New/com/mojang/minecraft/level/tile/GrassTile.java	2021-07-17 15:26:59.544709100 +0200
+@@ -3,6 +3,9 @@
+ import com.mojang.minecraft.level.Level;
+ import java.util.Random;
+ 
++/**
++ * This class represents a tile of grass.
++ */
+ public class GrassTile extends Tile {
+    protected GrassTile(int id) {
+       super(id);

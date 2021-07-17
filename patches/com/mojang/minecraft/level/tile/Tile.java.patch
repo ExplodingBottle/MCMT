@@ -1,0 +1,216 @@
+--- Old/com/mojang/minecraft/level/tile/Tile.java	2021-07-17 13:57:44.466971700 +0200
++++ New/com/mojang/minecraft/level/tile/Tile.java	2021-07-17 15:26:36.602715500 +0200
+@@ -7,28 +7,93 @@
+ import com.mojang.minecraft.renderer.Tesselator;
+ import java.util.Random;
+ 
++/**
++ * This class represents a Tile.<br>
++ * The concept of a Tile is a bit ambiguous.<br>
++ * There is no one Tile by blocks in the level but one Tile by type of blocks.<br>
++ * If a Tile's <code>getTexture</code> function is called, then the returned texture is for every blocks<br>
++ * of this type in the world.
++ */
+ public class Tile {
++   /**
++    * This is the array of all registered tiles.
++    */
+    public static final Tile[] tiles = new Tile[256];
++   
++   /**
++    * This is a empty tile. Same as using <code>null</code>.<br>
++    * Can cause <code>NullPointerException</code.
++    */
+    public static final Tile empty = null;
++   
++   /**
++    * This tile represents a rock block.
++    */
+    public static final Tile rock = new Tile(1, 1);
++   
++   /**
++    * This tile represents a grass block.
++    */
+    public static final Tile grass = new GrassTile(2);
++   
++   /**
++    * This tile represents a dirt block.
++    */
+    public static final Tile dirt = new DirtTile(3, 2);
++   
++   /**
++    * This tile represents a cobblestone block.
++    */
+    public static final Tile stoneBrick = new Tile(4, 16);
++   
++   /**
++    * This tile represents a cobblestone block.
++    */
+    public static final Tile wood = new Tile(5, 4);
++   
++   /**
++    * This tile represents a bush.
++    */
+    public static final Tile bush = new Bush(6);
++   
++   /**
++    * This is the texture number of the current tile.
++    */
+    public int tex;
++   
++   /**
++    * This is the identifier of the current tile.
++    */
+    public final int id;
+ 
++   /**
++    * This is a default constructor. Will have 0 as texture ID if not changed.
++    * @param id The identifier that will be used to register the tile.
++    */
+    protected Tile(int id) {
+       tiles[id] = this;
+       this.id = id;
+    }
+ 
++   /**
++    * This is a constructor that allows you to choose identifier and texture.
++    * @param id The identifier that will be used to register the tile.
++    * @param tex The texture that will be used to display the tile.
++    */
+    protected Tile(int id, int tex) {
+       this(id);
+       this.tex = tex;
+    }
+ 
++   /**
++    * This function is called when it is needed to render the Tile.
++    * @param t The Tesselator. This is used to render the Tile.
++    * @param level The reference of the level where the block is.
++    * @param layer The layer is set to 0 if lit and 1 if in shadow.
++    * @param x The X position of the block in the level.
++    * @param y The Y position of the block in the level.
++    * @param z The Z position of the block in the level.
++    */
+    public void render(Tesselator t, Level level, int layer, int x, int y, int z) {
+       float c1 = 1.0F;
+       float c2 = 0.8F;
+@@ -64,15 +129,37 @@
+       }
+ 
+    }
+-
++   
++   /**
++    * Checks if a face need to be rendered.
++    * @param level The reference of the level where the block is.
++    * @param x The X position of the block in the level.
++    * @param y The Y position of the block in the level.
++    * @param z The Z position of the block in the level.
++    * @param layer The layer is set to 0 if lit and 1 if in shadow.
++    * @return If we need to render the face.
++    */
+    private boolean shouldRenderFace(Level level, int x, int y, int z, int layer) {
+       return !level.isSolidTile(x, y, z) && level.isLit(x, y, z) ^ layer == 1;
+    }
+-
++   
++   /**
++    * This will return the texture of the choosen face.
++    * @param face A face of a block.
++    * @return The texture.
++    */
+    protected int getTexture(int face) {
+       return this.tex;
+    }
+-
++   
++   /**
++    * This will render the given face.
++    * @param t The reference of the Tesselator.
++    * @param x The X position of the block in the level.
++    * @param y The Y position of the block in the level.
++    * @param z The Z position of the block in the level.
++    * @param face The number of the face that will be rendered.
++    */
+    public void renderFace(Tesselator t, int x, int y, int z, int face) {
+       int tex = this.getTexture(face);
+       float u0 = (float)(tex % 16) / 16.0F;
+@@ -129,6 +216,14 @@
+ 
+    }
+ 
++   /**
++    * This will render the given face without any texture.
++    * @param t The reference of the Tesselator.
++    * @param x The X position of the block in the level.
++    * @param y The Y position of the block in the level.
++    * @param z The Z position of the block in the level.
++    * @param face The number of the face that will be rendered.
++    */
+    public void renderFaceNoTexture(Tesselator t, int x, int y, int z, int face) {
+       float x0 = (float)x + 0.0F;
+       float x1 = (float)x + 1.0F;
+@@ -180,25 +275,63 @@
+ 
+    }
+ 
++   /**
++    * Return the AABB of the tile. Used for the block selection box.
++    * @param x The X position of the block in the level.
++    * @param y The Y position of the block in the level.
++    * @param z The Z position of the block in the level.
++    * @return The AABB of the tile.
++    */
+    public final AABB getTileAABB(int x, int y, int z) {
+       return new AABB((float)x, (float)y, (float)z, (float)(x + 1), (float)(y + 1), (float)(z + 1));
+    }
+ 
++   /**
++    * Return the AABB of the tile. Used for the collision with player and entities.
++    * @param x The X position of the block in the level.
++    * @param y The Y position of the block in the level.
++    * @param z The Z position of the block in the level.
++    * @return The AABB of the tile.
++    */
+    public AABB getAABB(int x, int y, int z) {
+       return new AABB((float)x, (float)y, (float)z, (float)(x + 1), (float)(y + 1), (float)(z + 1));
+    }
+ 
++   /**
++    * Return if this tile doesn't let light pass through it.
++    * @return If this tile doesn't let light pass through it.
++    */
+    public boolean blocksLight() {
+       return true;
+    }
+ 
++   /**
++    * Return if the block will let blocks around it to be rendered. Mostly used for blocks with alpha color. Will avoid X-Ray blocks.
++    * @return If the block will let blocks around it to be rendered.
++    */
+    public boolean isSolid() {
+       return true;
+    }
+ 
++   /**
++    * Called when the tile receive a tick.
++    * @param level The reference of the level where the block is.
++    * @param x The X position of the block in the level.
++    * @param y The Y position of the block in the level.
++    * @param z The Z position of the block in the level.
++    * @param random A random number creator that should be used instead of creating another instance of itself.
++    */
+    public void tick(Level level, int x, int y, int z, Random random) {
+    }
+ 
++   /**
++    * Called when the tile should be deleted.
++    * @param level The reference of the level where the block is.
++    * @param x The X position of the block in the level.
++    * @param y The Y position of the block in the level.
++    * @param z The Z position of the block in the level.
++    * @param particleEngine The reference to the particle engine that will be used.
++    */
+    public void destroy(Level level, int x, int y, int z, ParticleEngine particleEngine) {
+       int SD = 4;
+ 

@@ -1,0 +1,11 @@
+--- Old/com/mojang/minecraft/level/tile/DirtTile.java	2021-07-17 13:57:44.451280200 +0200
++++ New/com/mojang/minecraft/level/tile/DirtTile.java	2021-07-17 15:27:15.142382600 +0200
+@@ -1,5 +1,8 @@
+ package com.mojang.minecraft.level.tile;
+ 
++/**
++ * This class represents a dirt tile.
++ */
+ public class DirtTile extends Tile {
+    protected DirtTile(int id, int tex) {
+       super(id, tex);

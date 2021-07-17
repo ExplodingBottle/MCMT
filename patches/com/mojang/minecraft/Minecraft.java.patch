@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/Minecraft.java	2021-07-17 13:57:44.482523400 +0200
-+++ New/com/mojang/minecraft/Minecraft.java	2021-07-17 14:59:22.445759800 +0200
++++ New/com/mojang/minecraft/Minecraft.java	2021-07-17 15:15:28.214436500 +0200
 @@ -1,23 +1,14 @@
  package com.mojang.minecraft;
  
@@ -243,12 +243,14 @@
        GL11.glLoadIdentity();
        GL11.glTranslatef(0.0F, 0.0F, -200.0F);
        this.checkGlError("GUI: Init");
-@@ -551,15 +554,15 @@
+@@ -550,16 +553,16 @@
+       GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
        GL11.glTranslatef(-1.5F, 0.5F, -0.5F);
        GL11.glScalef(-1.0F, -1.0F, 1.0F);
-       int id = this.textures.loadTexture("/terrain.png", 9728);
+-      int id = this.textures.loadTexture("/terrain.png", 9728);
 -      GL11.glBindTexture(3553, id);
 -      GL11.glEnable(3553);
++      int id = this.textures.loadTexture("/terrain.png", GL11.GL_NEAREST);
 +      GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
 +      GL11.glEnable(GL11.GL_TEXTURE_2D);
        t.init();
