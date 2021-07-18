@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/Minecraft.java	2021-07-18 13:06:06.664320600 +0200
-+++ New/com/mojang/minecraft/Minecraft.java	2021-07-18 17:16:56.825698400 +0200
++++ New/com/mojang/minecraft/Minecraft.java	2021-07-18 18:00:01.177806500 +0200
 @@ -1,23 +1,14 @@
  package com.mojang.minecraft;
  
@@ -92,15 +92,6 @@
        this.checkGlError("Startup");
        this.level = new Level(256, 256, 64);
        this.levelRenderer = new LevelRenderer(this.level, this.textures);
-@@ -122,7 +125,7 @@
-       this.particleEngine = new ParticleEngine(this.level, this.textures);
-       this.font = new Font("/default.gif", this.textures);
- 
--      for(int i = 0; i < 10; ++i) {
-+      for(int i = 0; i < 0; ++i) {
-          Zombie zombie = new Zombie(this.level, this.textures, 128.0F, 0.0F, 128.0F);
-          zombie.resetPos();
-          this.entities.add(zombie);
 @@ -330,39 +333,39 @@
              }
           } while(!Keyboard.getEventKeyState());
