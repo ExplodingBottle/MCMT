@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/gui/Font.java	2021-07-18 13:06:06.642973700 +0200
-+++ New/com/mojang/minecraft/gui/Font.java	2021-07-18 13:07:19.262421000 +0200
++++ New/com/mojang/minecraft/gui/Font.java	2021-07-18 17:16:56.794456800 +0200
 @@ -67,8 +67,8 @@
           color = (color & 16579836) >> 2;
        }

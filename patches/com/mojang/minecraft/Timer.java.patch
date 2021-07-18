@@ -1,18 +1,20 @@
 --- Old/com/mojang/minecraft/Timer.java	2021-07-18 13:06:06.669279500 +0200
-+++ New/com/mojang/minecraft/Timer.java	2021-07-18 13:07:19.293340100 +0200
-@@ -1,8 +1,8 @@
- package com.mojang.minecraft;
++++ New/com/mojang/minecraft/Timer.java	2021-07-18 17:23:40.472572200 +0200
+@@ -2,7 +2,7 @@
  
  public class Timer {
--   private static final long NS_PER_SECOND = 1000000000L;
+    private static final long NS_PER_SECOND = 1000000000L;
 -   private static final long MAX_NS_PER_UPDATE = 1000000000L;
-+   private static final long NS_PER_SECOND = 1000000000L; // Not sure where to place this constant.
 +   private static final long MAX_NS_PER_UPDATE = 1000000000L; // Not sure where to place this constant.
     private static final int MAX_TICKS_PER_UPDATE = 100;
     private float ticksPerSecond;
     private long lastTime;
-@@ -32,8 +32,8 @@
-       this.fps = (float)(1000000000L / passedNs);
+@@ -29,11 +29,11 @@
+          passedNs = 1000000000L;
+       }
+ 
+-      this.fps = (float)(1000000000L / passedNs);
++      this.fps = (float)(NS_PER_SECOND / passedNs);
        this.passedTime += (float)passedNs * this.timeScale * this.ticksPerSecond / 1.0E9F;
        this.ticks = (int)this.passedTime;
 -      if (this.ticks > 100) {

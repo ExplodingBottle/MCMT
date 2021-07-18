@@ -1,0 +1,46 @@
+--- Old/com/mojang/minecraft/HitResult.java	2021-07-18 13:06:06.642973700 +0200
++++ New/com/mojang/minecraft/HitResult.java	2021-07-18 17:22:13.622960900 +0200
+@@ -1,12 +1,43 @@
+ package com.mojang.minecraft;
+ 
++/**
++ * This class is used for obtaining informations about the tile that the player is facing.
++ */
+ public class HitResult {
++
++   /**
++    * The type of the selected tile.
++    */
+    public int type;
++   
++   /**
++    * The X coordinate of the selected tile.
++    */
+    public int x;
++   
++   /**
++    * The Y coordinate of the selected tile.
++    */
+    public int y;
++   
++   /**
++    * The Z coordinate of the selected tile.
++    */
+    public int z;
++   
++   /**
++    * The face number of the selected tile.
++    */
+    public int f;
+ 
++   /**
++    * The constructor of this class.
++    * @param type The type of the selected tile.
++    * @param x The X coordinate of the selected tile.
++    * @param y The Y coordinate of the selected tile.
++    * @param z The Z coordinate of the selected tile.
++    * @param f The face number of the selected tile.
++    */
+    public HitResult(int type, int x, int y, int z, int f) {
+       this.type = type;
+       this.x = x;

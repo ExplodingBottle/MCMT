@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/character/Cube.java	2021-07-18 13:06:06.637989200 +0200
-+++ New/com/mojang/minecraft/character/Cube.java	2021-07-18 13:07:19.252455500 +0200
++++ New/com/mojang/minecraft/character/Cube.java	2021-07-18 17:16:56.778835900 +0200
 @@ -79,8 +79,8 @@
  
     private void compile() {

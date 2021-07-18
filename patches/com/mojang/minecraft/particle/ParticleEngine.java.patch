@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/particle/ParticleEngine.java	2021-07-18 13:06:06.665290000 +0200
-+++ New/com/mojang/minecraft/particle/ParticleEngine.java	2021-07-18 13:07:19.283367000 +0200
++++ New/com/mojang/minecraft/particle/ParticleEngine.java	2021-07-18 17:16:56.825698400 +0200
 @@ -10,7 +10,7 @@
  
  public class ParticleEngine {
