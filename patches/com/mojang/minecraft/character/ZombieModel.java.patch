@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/character/ZombieModel.java	2021-07-17 13:57:44.396347600 +0200
-+++ New/com/mojang/minecraft/character/ZombieModel.java	2021-07-17 14:43:59.021613200 +0200
+--- Old/com/mojang/minecraft/character/ZombieModel.java	2021-07-18 13:06:06.639982700 +0200
++++ New/com/mojang/minecraft/character/ZombieModel.java	2021-07-18 13:07:19.255440400 +0200
 @@ -29,12 +29,12 @@
     public void render(float time) {
        this.head.yRot = (float)Math.sin((double)time * 0.83D) * 1.0F;

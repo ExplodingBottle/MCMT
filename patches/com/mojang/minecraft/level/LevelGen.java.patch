@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/level/LevelGen.java	2021-07-17 13:57:44.420035000 +0200
-+++ New/com/mojang/minecraft/level/LevelGen.java	2021-07-17 14:44:48.492283500 +0200
+--- Old/com/mojang/minecraft/level/LevelGen.java	2021-07-18 13:06:06.661317000 +0200
++++ New/com/mojang/minecraft/level/LevelGen.java	2021-07-18 13:07:19.269404700 +0200
 @@ -71,19 +71,19 @@
        x = w * h * d / 256 / 64;
  

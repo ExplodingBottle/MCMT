@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/renderer/Tesselator.java	2021-07-17 13:57:44.482523400 +0200
-+++ New/com/mojang/minecraft/renderer/Tesselator.java	2021-07-17 14:10:20.712997800 +0200
+--- Old/com/mojang/minecraft/renderer/Tesselator.java	2021-07-18 13:06:06.667284700 +0200
++++ New/com/mojang/minecraft/renderer/Tesselator.java	2021-07-18 13:07:19.289349400 +0200
 @@ -6,9 +6,9 @@
  
  public class Tesselator {

@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/server/MinecraftServer.java	2021-07-17 13:57:44.498144600 +0200
-+++ New/com/mojang/minecraft/server/MinecraftServer.java	2021-07-17 13:58:44.004646000 +0200
+--- Old/com/mojang/minecraft/server/MinecraftServer.java	2021-07-18 13:06:06.668282100 +0200
++++ New/com/mojang/minecraft/server/MinecraftServer.java	2021-07-18 13:07:19.292342900 +0200
 @@ -11,8 +11,8 @@
  
  public class MinecraftServer implements Runnable, ServerListener {

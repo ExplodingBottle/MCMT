@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/renderer/Textures.java	2021-07-17 13:57:44.482523400 +0200
-+++ New/com/mojang/minecraft/renderer/Textures.java	2021-07-17 14:17:13.787774200 +0200
+--- Old/com/mojang/minecraft/renderer/Textures.java	2021-07-18 13:06:06.667284700 +0200
++++ New/com/mojang/minecraft/renderer/Textures.java	2021-07-18 13:07:19.290347100 +0200
 @@ -11,7 +11,7 @@
  import org.lwjgl.util.glu.GLU;
  

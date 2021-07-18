@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/comm/SocketConnection.java	2021-07-17 13:57:44.396347600 +0200
-+++ New/com/mojang/minecraft/comm/SocketConnection.java	2021-07-17 13:58:43.973453300 +0200
+--- Old/com/mojang/minecraft/comm/SocketConnection.java	2021-07-18 13:06:06.642004300 +0200
++++ New/com/mojang/minecraft/comm/SocketConnection.java	2021-07-18 13:07:19.257436300 +0200
 @@ -19,7 +19,7 @@
     private ConnectionListener connectionListener;
     private int bytesRead;

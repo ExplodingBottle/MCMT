@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/Entity.java	2021-07-17 13:57:44.396347600 +0200
-+++ New/com/mojang/minecraft/Entity.java	2021-07-17 14:45:04.644124200 +0200
+--- Old/com/mojang/minecraft/Entity.java	2021-07-18 13:06:06.642004300 +0200
++++ New/com/mojang/minecraft/Entity.java	2021-07-18 13:33:02.025573600 +0200
 @@ -77,7 +77,7 @@
        float xaOrg = xa;
        float yaOrg = ya;
@@ -9,6 +9,15 @@
  
        int i;
        for(i = 0; i < aABBs.size(); ++i) {
+@@ -95,7 +95,7 @@
+       for(i = 0; i < aABBs.size(); ++i) {
+          za = ((AABB)aABBs.get(i)).clipZCollide(this.bb, za);
+       }
+-
++      
+       this.bb.move(0.0F, 0.0F, za);
+       this.onGround = yaOrg != ya && yaOrg < 0.0F;
+       if (xaOrg != xa) {
 @@ -121,8 +121,8 @@
           dist = speed / (float)Math.sqrt((double)dist);
           xa *= dist;

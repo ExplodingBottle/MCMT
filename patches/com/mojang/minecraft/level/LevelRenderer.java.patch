@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/level/LevelRenderer.java	2021-07-17 13:57:44.451280200 +0200
-+++ New/com/mojang/minecraft/level/LevelRenderer.java	2021-07-17 14:32:37.104365900 +0200
+--- Old/com/mojang/minecraft/level/LevelRenderer.java	2021-07-18 13:06:06.662298000 +0200
++++ New/com/mojang/minecraft/level/LevelRenderer.java	2021-07-18 13:07:19.271397000 +0200
 @@ -26,20 +26,20 @@
        this.level = level;
        this.textures = textures;

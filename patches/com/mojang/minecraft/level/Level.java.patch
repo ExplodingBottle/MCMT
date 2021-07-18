@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/level/Level.java	2021-07-17 13:57:44.420035000 +0200
-+++ New/com/mojang/minecraft/level/Level.java	2021-07-17 13:58:43.989022800 +0200
+--- Old/com/mojang/minecraft/level/Level.java	2021-07-18 13:06:06.660301400 +0200
++++ New/com/mojang/minecraft/level/Level.java	2021-07-18 13:07:19.267407700 +0200
 @@ -19,7 +19,7 @@
     public final int depth;
     private byte[] blocks;

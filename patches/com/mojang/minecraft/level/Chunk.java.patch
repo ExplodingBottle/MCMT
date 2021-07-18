@@ -1,5 +1,5 @@
---- Old/com/mojang/minecraft/level/Chunk.java	2021-07-17 13:57:44.396347600 +0200
-+++ New/com/mojang/minecraft/level/Chunk.java	2021-07-17 15:17:20.199487000 +0200
+--- Old/com/mojang/minecraft/level/Chunk.java	2021-07-18 13:06:06.642973700 +0200
++++ New/com/mojang/minecraft/level/Chunk.java	2021-07-18 13:07:19.264416400 +0200
 @@ -23,8 +23,8 @@
     public long dirtiedTime = 0L;
     private static Tesselator t;
