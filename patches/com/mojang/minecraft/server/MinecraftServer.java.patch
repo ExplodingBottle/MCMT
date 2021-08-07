@@ -1,6 +1,6 @@
 --- Old/com/mojang/minecraft/server/MinecraftServer.java	2021-07-18 13:06:06.668282100 +0200
-+++ New/com/mojang/minecraft/server/MinecraftServer.java	2021-07-18 17:16:56.841320000 +0200
-@@ -11,8 +11,8 @@
++++ New/com/mojang/minecraft/server/MinecraftServer.java	2021-08-07 19:20:05.764534200 +0200
+@@ -11,35 +11,35 @@
  
  public class MinecraftServer implements Runnable, ServerListener {
     private SocketServer socketServer;
@@ -10,4 +10,48 @@
 +   private List<Client> clients = new ArrayList<>();
  
     public MinecraftServer(byte[] ips, int port) throws IOException {
-       this.socketServer = new SocketServer(ips, port, this);
+-      this.socketServer = new SocketServer(ips, port, this);
++      socketServer = new SocketServer(ips, port, this);
+    }
+ 
+    public void clientConnected(SocketConnection serverConnection) {
+       Client client = new Client(this, serverConnection);
+-      this.clientMap.put(serverConnection, client);
+-      this.clients.add(client);
++      clientMap.put(serverConnection, client);
++      clients.add(client);
+    }
+ 
+    public void disconnect(Client client) {
+-      this.clientMap.remove(client.serverConnection);
+-      this.clients.remove(client);
++      clientMap.remove(client.serverConnection);
++      clients.remove(client);
+    }
+ 
+    public void clientException(SocketConnection serverConnection, Exception e) {
+-      Client client = (Client)this.clientMap.get(serverConnection);
++      Client client = this.clientMap.get(serverConnection);
+       client.handleException(e);
+    }
+ 
+    public void run() {
+       while(true) {
+-         this.tick();
++         tick();
+ 
+          try {
+-            Thread.sleep(5L);
++            Thread.sleep(5);
+          } catch (InterruptedException var2) {
+          }
+       }
+@@ -47,7 +47,7 @@
+ 
+    private void tick() {
+       try {
+-         this.socketServer.tick();
++         socketServer.tick();
+       } catch (IOException var2) {
+          var2.printStackTrace();
+       }

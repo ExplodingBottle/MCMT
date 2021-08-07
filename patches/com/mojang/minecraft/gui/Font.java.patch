@@ -1,5 +1,26 @@
 --- Old/com/mojang/minecraft/gui/Font.java	2021-07-18 13:06:06.642973700 +0200
-+++ New/com/mojang/minecraft/gui/Font.java	2021-07-18 17:16:56.794456800 +0200
++++ New/com/mojang/minecraft/gui/Font.java	2021-08-07 19:40:20.788291800 +0200
+@@ -49,16 +49,16 @@
+          this.charWidths[i] = x;
+       }
+ 
+-      this.fontTexture = textures.loadTexture(name, 9728);
++      fontTexture = textures.loadTexture(name, GL11.GL_NEAREST);
+    }
+ 
+    public void drawShadow(String str, int x, int y, int color) {
+-      this.draw(str, x + 1, y + 1, color, true);
+-      this.draw(str, x, y, color);
++      draw(str, x + 1, y + 1, color, true);
++      draw(str, x, y, color);
+    }
+ 
+    public void draw(String str, int x, int y, int color) {
+-      this.draw(str, x, y, color, false);
++      draw(str, x, y, color, false);
+    }
+ 
+    public void draw(String str, int x, int y, int color, boolean darken) {
 @@ -67,8 +67,8 @@
           color = (color & 16579836) >> 2;
        }
@@ -7,11 +28,16 @@
 -      GL11.glEnable(3553);
 -      GL11.glBindTexture(3553, this.fontTexture);
 +      GL11.glEnable(GL11.GL_TEXTURE_2D);
-+      GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.fontTexture);
++      GL11.glBindTexture(GL11.GL_TEXTURE_2D, fontTexture);
        Tesselator t = Tesselator.instance;
        t.init();
        t.color(color);
-@@ -102,7 +102,7 @@
+@@ -98,11 +98,11 @@
+          t.vertexUV((float)(x + xo + 8), (float)(y + 8), 0.0F, (float)(ix + 8) / 128.0F, (float)(iy + 8) / 128.0F);
+          t.vertexUV((float)(x + xo + 8), (float)y, 0.0F, (float)(ix + 8) / 128.0F, (float)iy / 128.0F);
+          t.vertexUV((float)(x + xo), (float)y, 0.0F, (float)ix / 128.0F, (float)iy / 128.0F);
+-         xo += this.charWidths[chars[i]];
++         xo += charWidths[chars[i]];
        }
  
        t.flush();

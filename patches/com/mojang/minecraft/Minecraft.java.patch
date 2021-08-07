@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/Minecraft.java	2021-07-18 13:06:06.664320600 +0200
-+++ New/com/mojang/minecraft/Minecraft.java	2021-07-18 18:00:01.177806500 +0200
++++ New/com/mojang/minecraft/Minecraft.java	2021-08-07 19:09:54.810276500 +0200
 @@ -1,23 +1,14 @@
  package com.mojang.minecraft;
  

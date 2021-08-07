@@ -1,0 +1,19 @@
+--- Old/com/mojang/minecraft/level/NoiseMap.java	2021-07-18 13:06:06.662298000 +0200
++++ New/com/mojang/minecraft/level/NoiseMap.java	2021-08-07 19:27:27.792094200 +0200
+@@ -18,14 +18,14 @@
+    public int[] read(int width, int height) {
+       Random random = new Random();
+       int[] tmp = new int[width * height];
+-      int level = this.levels;
++      int level = levels;
+       int step = width >> level;
+ 
+       int val;
+       int ss;
+       for(val = 0; val < height; val += step) {
+          for(ss = 0; ss < width; ss += step) {
+-            tmp[ss + val * width] = (random.nextInt(256) - 128) * this.fuzz;
++            tmp[ss + val * width] = (random.nextInt(256) - 128) * fuzz;
+          }
+       }
+ 

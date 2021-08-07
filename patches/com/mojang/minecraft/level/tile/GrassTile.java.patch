@@ -1,6 +1,6 @@
 --- Old/com/mojang/minecraft/level/tile/GrassTile.java	2021-07-18 13:06:06.663298000 +0200
-+++ New/com/mojang/minecraft/level/tile/GrassTile.java	2021-07-18 17:16:56.810077100 +0200
-@@ -3,6 +3,9 @@
++++ New/com/mojang/minecraft/level/tile/GrassTile.java	2021-08-07 19:26:32.086198000 +0200
+@@ -3,10 +3,13 @@
  import com.mojang.minecraft.level.Level;
  import java.util.Random;
  
@@ -10,3 +10,8 @@
  public class GrassTile extends Tile {
     protected GrassTile(int id) {
        super(id);
+-      this.tex = 3;
++      tex = 3;
+    }
+ 
+    protected int getTexture(int face) {

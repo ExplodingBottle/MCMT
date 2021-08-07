@@ -1,0 +1,15 @@
+--- Old/com/mojang/minecraft/server/Client.java	2021-07-18 13:06:06.667284700 +0200
++++ New/com/mojang/minecraft/server/Client.java	2021-08-07 19:11:34.649082900 +0200
+@@ -18,10 +18,10 @@
+    }
+ 
+    public void handleException(Exception e) {
+-      this.disconnect();
++      disconnect();
+    }
+ 
+    public void disconnect() {
+-      this.server.disconnect(this);
++      server.disconnect(this);
+    }
+ }

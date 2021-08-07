@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/level/LevelRenderer.java	2021-07-18 13:06:06.662298000 +0200
-+++ New/com/mojang/minecraft/level/LevelRenderer.java	2021-07-18 17:16:56.810077100 +0200
++++ New/com/mojang/minecraft/level/LevelRenderer.java	2021-08-07 19:29:04.526450500 +0200
 @@ -26,20 +26,20 @@
        this.level = level;
        this.textures = textures;
@@ -7,20 +7,25 @@
 -      this.xChunks = level.width / 16;
 -      this.yChunks = level.depth / 16;
 -      this.zChunks = level.height / 16;
-+      this.xChunks = level.width / CHUNK_SIZE;
-+      this.yChunks = level.depth / CHUNK_SIZE;
-+      this.zChunks = level.height / CHUNK_SIZE;
-       this.chunks = new Chunk[this.xChunks * this.yChunks * this.zChunks];
- 
-       for(int x = 0; x < this.xChunks; ++x) {
-          for(int y = 0; y < this.yChunks; ++y) {
-             for(int z = 0; z < this.zChunks; ++z) {
+-      this.chunks = new Chunk[this.xChunks * this.yChunks * this.zChunks];
+-
+-      for(int x = 0; x < this.xChunks; ++x) {
+-         for(int y = 0; y < this.yChunks; ++y) {
+-            for(int z = 0; z < this.zChunks; ++z) {
 -               int x0 = x * 16;
 -               int y0 = y * 16;
 -               int z0 = z * 16;
 -               int x1 = (x + 1) * 16;
 -               int y1 = (y + 1) * 16;
 -               int z1 = (z + 1) * 16;
++      xChunks = level.width / CHUNK_SIZE;
++      yChunks = level.depth / CHUNK_SIZE;
++      zChunks = level.height / CHUNK_SIZE;
++      chunks = new Chunk[xChunks * yChunks * zChunks];
++
++      for(int x = 0; x < xChunks; ++x) {
++         for(int y = 0; y < yChunks; ++y) {
++            for(int z = 0; z < zChunks; ++z) {
 +               int x0 = x * CHUNK_SIZE;
 +               int y0 = y * CHUNK_SIZE;
 +               int z0 = z * CHUNK_SIZE;
@@ -30,7 +35,15 @@
                 if (x1 > level.width) {
                    x1 = level.width;
                 }
-@@ -59,14 +59,14 @@
+@@ -52,21 +52,21 @@
+                   z1 = level.height;
+                }
+ 
+-               this.chunks[(x + y * this.xChunks) * this.zChunks + z] = new Chunk(level, x0, y0, z0, x1, y1, z1);
++               chunks[(x + y * xChunks) * zChunks + z] = new Chunk(level, x0, y0, z0, x1, y1, z1);
+             }
+          }
+       }
  
     }
  
@@ -56,7 +69,7 @@
 -      int id = this.textures.loadTexture("/terrain.png", 9728);
 -      GL11.glBindTexture(3553, id);
 +      GL11.glEnable(GL11.GL_TEXTURE_2D);
-+      int id = this.textures.loadTexture("/terrain.png", GL11.GL_NEAREST);
++      int id = textures.loadTexture("/terrain.png", GL11.GL_NEAREST);
 +      GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
        Frustum frustum = Frustum.getFrustum();
  
@@ -103,7 +116,7 @@
 -         int id = this.textures.loadTexture("/terrain.png", 9728);
 -         GL11.glBindTexture(3553, id);
 +         GL11.glEnable(GL11.GL_TEXTURE_2D);
-+         int id = this.textures.loadTexture("/terrain.png", GL11.GL_NEAREST);
++         int id = textures.loadTexture("/terrain.png", GL11.GL_NEAREST);
 +         GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
           int x = h.x;
           int y = h.y;
@@ -136,3 +149,51 @@
        if (x0 < 0) {
           x0 = 0;
        }
+@@ -229,22 +229,22 @@
+          z0 = 0;
+       }
+ 
+-      if (x1 >= this.xChunks) {
+-         x1 = this.xChunks - 1;
++      if (x1 >= xChunks) {
++         x1 = xChunks - 1;
+       }
+ 
+-      if (y1 >= this.yChunks) {
+-         y1 = this.yChunks - 1;
++      if (y1 >= yChunks) {
++         y1 = yChunks - 1;
+       }
+ 
+-      if (z1 >= this.zChunks) {
+-         z1 = this.zChunks - 1;
++      if (z1 >= zChunks) {
++         z1 = zChunks - 1;
+       }
+ 
+       for(int x = x0; x <= x1; ++x) {
+          for(int y = y0; y <= y1; ++y) {
+             for(int z = z0; z <= z1; ++z) {
+-               this.chunks[(x + y * this.xChunks) * this.zChunks + z].setDirty();
++               chunks[(x + y * xChunks) * zChunks + z].setDirty();
+             }
+          }
+       }
+@@ -252,14 +252,14 @@
+    }
+ 
+    public void tileChanged(int x, int y, int z) {
+-      this.setDirty(x - 1, y - 1, z - 1, x + 1, y + 1, z + 1);
++      setDirty(x - 1, y - 1, z - 1, x + 1, y + 1, z + 1);
+    }
+ 
+    public void lightColumnChanged(int x, int z, int y0, int y1) {
+-      this.setDirty(x - 1, y0 - 1, z - 1, x + 1, y1 + 1, z + 1);
++      setDirty(x - 1, y0 - 1, z - 1, x + 1, y1 + 1, z + 1);
+    }
+ 
+    public void allChanged() {
+-      this.setDirty(0, 0, 0, this.level.width, this.level.depth, this.level.height);
++      setDirty(0, 0, 0, level.width, level.depth, level.height);
+    }
+ }

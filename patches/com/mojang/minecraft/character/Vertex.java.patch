@@ -1,0 +1,11 @@
+--- Old/com/mojang/minecraft/character/Vertex.java	2021-07-18 13:06:06.639982700 +0200
++++ New/com/mojang/minecraft/character/Vertex.java	2021-08-07 19:43:49.362350600 +0200
+@@ -14,7 +14,7 @@
+    }
+ 
+    public Vertex(Vertex vertex, float u, float v) {
+-      this.pos = vertex.pos;
++      pos = vertex.pos;
+       this.u = u;
+       this.v = v;
+    }

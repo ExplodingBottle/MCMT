@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/Timer.java	2021-07-18 13:06:06.669279500 +0200
-+++ New/com/mojang/minecraft/Timer.java	2021-07-18 17:23:40.472572200 +0200
++++ New/com/mojang/minecraft/Timer.java	2021-08-07 19:09:54.823821600 +0200
 @@ -2,7 +2,7 @@
  
  public class Timer {

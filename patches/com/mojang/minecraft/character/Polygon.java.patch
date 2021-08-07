@@ -1,0 +1,23 @@
+--- Old/com/mojang/minecraft/character/Polygon.java	2021-07-18 13:06:06.637989200 +0200
++++ New/com/mojang/minecraft/character/Polygon.java	2021-08-07 19:44:23.437952300 +0200
+@@ -7,9 +7,9 @@
+    public int vertexCount;
+ 
+    public Polygon(Vertex[] vertices) {
+-      this.vertexCount = 0;
++      vertexCount = 0;
+       this.vertices = vertices;
+-      this.vertexCount = vertices.length;
++      vertexCount = vertices.length;
+    }
+ 
+    public Polygon(Vertex[] vertices, int u0, int v0, int u1, int v1) {
+@@ -24,7 +24,7 @@
+       GL11.glColor3f(1.0F, 1.0F, 1.0F);
+ 
+       for(int i = 3; i >= 0; --i) {
+-         Vertex v = this.vertices[i];
++         Vertex v = vertices[i];
+          GL11.glTexCoord2f(v.u / 63.999F, v.v / 31.999F);
+          GL11.glVertex3f(v.pos.x, v.pos.y, v.pos.z);
+       }

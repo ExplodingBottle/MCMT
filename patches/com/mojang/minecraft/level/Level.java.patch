@@ -1,6 +1,6 @@
 --- Old/com/mojang/minecraft/level/Level.java	2021-07-18 13:06:06.660301400 +0200
-+++ New/com/mojang/minecraft/level/Level.java	2021-07-18 17:16:56.810077100 +0200
-@@ -19,7 +19,7 @@
++++ New/com/mojang/minecraft/level/Level.java	2021-08-07 19:36:42.323079600 +0200
+@@ -19,32 +19,32 @@
     public final int depth;
     private byte[] blocks;
     private int[] lightDepths;
@@ -9,7 +9,93 @@
     private Random random = new Random();
     int unprocessed = 0;
  
-@@ -102,8 +102,8 @@
+    public Level(int w, int h, int d) {
+-      this.width = w;
+-      this.height = h;
+-      this.depth = d;
+-      this.blocks = new byte[w * h * d];
+-      this.lightDepths = new int[w * h];
+-      boolean mapLoaded = this.load();
++      width = w;
++      height = h;
++      depth = d;
++      blocks = new byte[w * h * d];
++      lightDepths = new int[w * h];
++      boolean mapLoaded = load();
+       if (!mapLoaded) {
+-         this.blocks = (new LevelGen(w, h, d)).generateMap();
++         blocks = new LevelGen(w, h, d).generateMap();
+       }
+ 
+-      this.calcLightDepths(0, 0, w, h);
++      calcLightDepths(0, 0, w, h);
+    }
+ 
+    public boolean load() {
+       try {
+          DataInputStream dis = new DataInputStream(new GZIPInputStream(new FileInputStream(new File("level.dat"))));
+-         dis.readFully(this.blocks);
+-         this.calcLightDepths(0, 0, this.width, this.height);
++         dis.readFully(blocks);
++         calcLightDepths(0, 0, width, height);
+ 
+-         for(int i = 0; i < this.levelListeners.size(); ++i) {
+-            ((LevelListener)this.levelListeners.get(i)).allChanged();
++         for(int i = 0; i < levelListeners.size(); ++i) {
++            levelListeners.get(i).allChanged();
+          }
+ 
+          dis.close();
+@@ -58,7 +58,7 @@
+    public void save() {
+       try {
+          DataOutputStream dos = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(new File("level.dat"))));
+-         dos.write(this.blocks);
++         dos.write(blocks);
+          dos.close();
+       } catch (Exception var2) {
+          var2.printStackTrace();
+@@ -69,19 +69,19 @@
+    public void calcLightDepths(int x0, int y0, int x1, int y1) {
+       for(int x = x0; x < x0 + x1; ++x) {
+          for(int z = y0; z < y0 + y1; ++z) {
+-            int oldDepth = this.lightDepths[x + z * this.width];
++            int oldDepth = lightDepths[x + z * width];
+ 
+             int y;
+-            for(y = this.depth - 1; y > 0 && !this.isLightBlocker(x, y, z); --y) {
++            for(y = depth - 1; y > 0 && !isLightBlocker(x, y, z); --y) {
+             }
+ 
+-            this.lightDepths[x + z * this.width] = y;
++            this.lightDepths[x + z * width] = y;
+             if (oldDepth != y) {
+                int yl0 = oldDepth < y ? oldDepth : y;
+                int yl1 = oldDepth > y ? oldDepth : y;
+ 
+-               for(int i = 0; i < this.levelListeners.size(); ++i) {
+-                  ((LevelListener)this.levelListeners.get(i)).lightColumnChanged(x, z, yl0, yl1);
++               for(int i = 0; i < levelListeners.size(); ++i) {
++                  levelListeners.get(i).lightColumnChanged(x, z, yl0, yl1);
+                }
+             }
+          }
+@@ -90,20 +90,20 @@
+    }
+ 
+    public void addListener(LevelListener levelListener) {
+-      this.levelListeners.add(levelListener);
++      levelListeners.add(levelListener);
+    }
+ 
+    public void removeListener(LevelListener levelListener) {
+-      this.levelListeners.remove(levelListener);
++      levelListeners.remove(levelListener);
+    }
+ 
+    public boolean isLightBlocker(int x, int y, int z) {
+-      Tile tile = Tile.tiles[this.getTile(x, y, z)];
++      Tile tile = Tile.tiles[getTile(x, y, z)];
        return tile == null ? false : tile.blocksLight();
     }
  
@@ -20,14 +106,102 @@
        int x0 = (int)aABB.x0;
        int x1 = (int)(aABB.x1 + 1.0F);
        int y0 = (int)aABB.y0;
-@@ -189,8 +189,8 @@
+@@ -122,22 +122,22 @@
+          z0 = 0;
+       }
+ 
+-      if (x1 > this.width) {
+-         x1 = this.width;
++      if (x1 > width) {
++         x1 = width;
+       }
+ 
+-      if (y1 > this.depth) {
+-         y1 = this.depth;
++      if (y1 > depth) {
++         y1 = depth;
+       }
+ 
+-      if (z1 > this.height) {
+-         z1 = this.height;
++      if (z1 > height) {
++         z1 = height;
+       }
+ 
+       for(int x = x0; x < x1; ++x) {
+          for(int y = y0; y < y1; ++y) {
+             for(int z = z0; z < z1; ++z) {
+-               Tile tile = Tile.tiles[this.getTile(x, y, z)];
++               Tile tile = Tile.tiles[getTile(x, y, z)];
+                if (tile != null) {
+                   AABB aabb = tile.getAABB(x, y, z);
+                   if (aabb != null) {
+@@ -152,15 +152,15 @@
+    }
+ 
+    public boolean setTile(int x, int y, int z, int type) {
+-      if (x >= 0 && y >= 0 && z >= 0 && x < this.width && y < this.depth && z < this.height) {
+-         if (type == this.blocks[(y * this.height + z) * this.width + x]) {
++      if (x >= 0 && y >= 0 && z >= 0 && x < width && y < depth && z < height) {
++         if (type == blocks[(y * height + z) * width + x]) {
+             return false;
+          } else {
+-            this.blocks[(y * this.height + z) * this.width + x] = (byte)type;
+-            this.calcLightDepths(x, z, 1, 1);
++            blocks[(y * height + z) * width + x] = (byte)type;
++            calcLightDepths(x, z, 1, 1);
+ 
+-            for(int i = 0; i < this.levelListeners.size(); ++i) {
+-               ((LevelListener)this.levelListeners.get(i)).tileChanged(x, y, z);
++            for(int i = 0; i < levelListeners.size(); ++i) {
++               levelListeners.get(i).tileChanged(x, y, z);
+             }
+ 
+             return true;
+@@ -171,34 +171,34 @@
+    }
+ 
+    public boolean isLit(int x, int y, int z) {
+-      if (x >= 0 && y >= 0 && z >= 0 && x < this.width && y < this.depth && z < this.height) {
+-         return y >= this.lightDepths[x + z * this.width];
++      if (x >= 0 && y >= 0 && z >= 0 && x < width && y < depth && z < height) {
++         return y >= lightDepths[x + z * width];
+       } else {
+          return true;
+       }
+    }
+ 
+    public int getTile(int x, int y, int z) {
+-      return x >= 0 && y >= 0 && z >= 0 && x < this.width && y < this.depth && z < this.height ? this.blocks[(y * this.height + z) * this.width + x] : 0;
++      return x >= 0 && y >= 0 && z >= 0 && x < width && y < depth && z < height ? blocks[(y * height + z) * width + x] : 0;
+    }
+ 
+    public boolean isSolidTile(int x, int y, int z) {
+-      Tile tile = Tile.tiles[this.getTile(x, y, z)];
++      Tile tile = Tile.tiles[getTile(x, y, z)];
+       return tile == null ? false : tile.isSolid();
+    }
  
     public void tick() {
-       this.unprocessed += this.width * this.height * this.depth;
+-      this.unprocessed += this.width * this.height * this.depth;
 -      int ticks = this.unprocessed / 400;
 -      this.unprocessed -= ticks * 400;
-+      int ticks = this.unprocessed / TILE_UPDATE_INTERVAL;
-+      this.unprocessed -= ticks * TILE_UPDATE_INTERVAL;
++      unprocessed += width * height * depth;
++      int ticks = unprocessed / TILE_UPDATE_INTERVAL;
++      unprocessed -= ticks * TILE_UPDATE_INTERVAL;
  
        for(int i = 0; i < ticks; ++i) {
-          int x = this.random.nextInt(this.width);
+-         int x = this.random.nextInt(this.width);
+-         int y = this.random.nextInt(this.depth);
+-         int z = this.random.nextInt(this.height);
+-         Tile tile = Tile.tiles[this.getTile(x, y, z)];
++         int x = random.nextInt(width);
++         int y = random.nextInt(depth);
++         int z = random.nextInt(height);
++         Tile tile = Tile.tiles[getTile(x, y, z)];
+          if (tile != null) {
+-            tile.tick(this, x, y, z, this.random);
++            tile.tick(this, x, y, z, random);
+          }
+       }
+ 

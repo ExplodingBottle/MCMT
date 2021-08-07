@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/level/Chunk.java	2021-07-18 13:06:06.642973700 +0200
-+++ New/com/mojang/minecraft/level/Chunk.java	2021-07-18 17:16:56.794456800 +0200
++++ New/com/mojang/minecraft/level/Chunk.java	2021-08-07 19:38:03.236210200 +0200
 @@ -23,8 +23,8 @@
     public long dirtiedTime = 0L;
     private static Tesselator t;
@@ -11,12 +11,84 @@
  
     static {
        t = Tesselator.instance;
-@@ -52,7 +52,7 @@
-       this.dirty = false;
+@@ -41,27 +41,27 @@
+       this.x1 = x1;
+       this.y1 = y1;
+       this.z1 = z1;
+-      this.x = (float)(x0 + x1) / 2.0F;
+-      this.y = (float)(y0 + y1) / 2.0F;
+-      this.z = (float)(z0 + z1) / 2.0F;
+-      this.aabb = new AABB((float)x0, (float)y0, (float)z0, (float)x1, (float)y1, (float)z1);
+-      this.lists = GL11.glGenLists(2);
++      x = (float)(x0 + x1) / 2.0F;
++      y = (float)(y0 + y1) / 2.0F;
++      z = (float)(z0 + z1) / 2.0F;
++      aabb = new AABB((float)x0, (float)y0, (float)z0, (float)x1, (float)y1, (float)z1);
++      lists = GL11.glGenLists(2);
+    }
+ 
+    private void rebuild(int layer) {
+-      this.dirty = false;
++      dirty = false;
        ++updates;
        long before = System.nanoTime();
 -      GL11.glNewList(this.lists + layer, 4864);
-+      GL11.glNewList(this.lists + layer, GL11.GL_COMPILE);
++      GL11.glNewList(lists + layer, GL11.GL_COMPILE);
        t.init();
        int tiles = 0;
  
+-      for(int x = this.x0; x < this.x1; ++x) {
+-         for(int y = this.y0; y < this.y1; ++y) {
+-            for(int z = this.z0; z < this.z1; ++z) {
+-               int tileId = this.level.getTile(x, y, z);
++      for(int x = x0; x < x1; ++x) {
++         for(int y = y0; y < y1; ++y) {
++            for(int z = z0; z < z1; ++z) {
++               int tileId = level.getTile(x, y, z);
+                if (tileId > 0) {
+-                  Tile.tiles[tileId].render(t, this.level, layer, x, y, z);
++                  Tile.tiles[tileId].render(t, level, layer, x, y, z);
+                   ++tiles;
+                }
+             }
+@@ -79,30 +79,30 @@
+    }
+ 
+    public void rebuild() {
+-      this.rebuild(0);
+-      this.rebuild(1);
++      rebuild(0);
++      rebuild(1);
+    }
+ 
+    public void render(int layer) {
+-      GL11.glCallList(this.lists + layer);
++      GL11.glCallList(lists + layer);
+    }
+ 
+    public void setDirty() {
+-      if (!this.dirty) {
+-         this.dirtiedTime = System.currentTimeMillis();
++      if (!dirty) {
++         dirtiedTime = System.currentTimeMillis();
+       }
+ 
+-      this.dirty = true;
++      dirty = true;
+    }
+ 
+    public boolean isDirty() {
+-      return this.dirty;
++      return dirty;
+    }
+ 
+    public float distanceToSqr(Player player) {
+-      float xd = player.x - this.x;
+-      float yd = player.y - this.y;
+-      float zd = player.z - this.z;
++      float xd = player.x - x;
++      float yd = player.y - y;
++      float zd = player.z - z;
+       return xd * xd + yd * yd + zd * zd;
+    }
+ }

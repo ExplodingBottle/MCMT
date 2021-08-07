@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/phys/AABB.java	2021-07-18 13:06:06.666287400 +0200
-+++ New/com/mojang/minecraft/phys/AABB.java	2021-07-18 17:16:56.825698400 +0200
++++ New/com/mojang/minecraft/phys/AABB.java	2021-08-07 19:18:34.002351700 +0200
 @@ -1,14 +1,56 @@
  package com.mojang.minecraft.phys;
  
@@ -57,7 +57,7 @@
     public AABB(float x0, float y0, float z0, float x1, float y1, float z1) {
        this.x0 = x0;
        this.y0 = y0;
-@@ -18,6 +60,16 @@
+@@ -18,13 +60,23 @@
        this.z1 = z1;
     }
  
@@ -72,9 +72,22 @@
 +    * @return A new collision box expanded with given coordinates.
 +    */
     public AABB expand(float xa, float ya, float za) {
-       float _x0 = this.x0;
-       float _y0 = this.y0;
-@@ -52,6 +104,13 @@
+-      float _x0 = this.x0;
+-      float _y0 = this.y0;
+-      float _z0 = this.z0;
+-      float _x1 = this.x1;
+-      float _y1 = this.y1;
+-      float _z1 = this.z1;
++      float _x0 = x0;
++      float _y0 = y0;
++      float _z0 = z0;
++      float _x1 = x1;
++      float _y1 = y1;
++      float _z1 = z1;
+       if (xa < 0.0F) {
+          _x0 += xa;
+       }
+@@ -52,29 +104,42 @@
        return new AABB(_x0, _y0, _z0, _x1, _y1, _z1);
     }
  
@@ -86,9 +99,18 @@
 +    * @return A new collision box grown with given coordinates.
 +    */
     public AABB grow(float xa, float ya, float za) {
-       float _x0 = this.x0 - xa;
-       float _y0 = this.y0 - ya;
-@@ -62,6 +121,12 @@
+-      float _x0 = this.x0 - xa;
+-      float _y0 = this.y0 - ya;
+-      float _z0 = this.z0 - za;
+-      float _x1 = this.x1 + xa;
+-      float _y1 = this.y1 + ya;
+-      float _z1 = this.z1 + za;
++      float _x0 = x0 - xa;
++      float _y0 = y0 - ya;
++      float _z0 = z0 - za;
++      float _x1 = x1 + xa;
++      float _y1 = y1 + ya;
++      float _z1 = z1 + za;
        return new AABB(_x0, _y0, _z0, _x1, _y1, _z1);
     }
  
@@ -99,9 +121,28 @@
 +    * @return The accepted offset.
 +    */
     public float clipXCollide(AABB c, float xa) {
-       if (!(c.y1 <= this.y0) && !(c.y0 >= this.y1)) {
-          if (!(c.z1 <= this.z0) && !(c.z0 >= this.z1)) {
-@@ -89,6 +154,12 @@
+-      if (!(c.y1 <= this.y0) && !(c.y0 >= this.y1)) {
+-         if (!(c.z1 <= this.z0) && !(c.z0 >= this.z1)) {
++      if (!(c.y1 <= y0) && !(c.y0 >= y1)) {
++         if (!(c.z1 <= z0) && !(c.z0 >= z1)) {
+             float max;
+-            if (xa > 0.0F && c.x1 <= this.x0) {
+-               max = this.x0 - c.x1 - this.epsilon;
++            if (xa > 0.0F && c.x1 <= x0) {
++               max = x0 - c.x1 - epsilon;
+                if (max < xa) {
+                   xa = max;
+                }
+             }
+ 
+-            if (xa < 0.0F && c.x0 >= this.x1) {
+-               max = this.x1 - c.x0 + this.epsilon;
++            if (xa < 0.0F && c.x0 >= x1) {
++               max = x1 - c.x0 + epsilon;
+                if (max > xa) {
+                   xa = max;
+                }
+@@ -89,19 +154,25 @@
        }
     }
  
@@ -112,9 +153,28 @@
 +    * @return The accepted offset.
 +    */
     public float clipYCollide(AABB c, float ya) {
-       if (!(c.x1 <= this.x0) && !(c.x0 >= this.x1)) {
-          if (!(c.z1 <= this.z0) && !(c.z0 >= this.z1)) {
-@@ -116,6 +187,12 @@
+-      if (!(c.x1 <= this.x0) && !(c.x0 >= this.x1)) {
+-         if (!(c.z1 <= this.z0) && !(c.z0 >= this.z1)) {
++      if (!(c.x1 <= x0) && !(c.x0 >= x1)) {
++         if (!(c.z1 <= z0) && !(c.z0 >= z1)) {
+             float max;
+-            if (ya > 0.0F && c.y1 <= this.y0) {
+-               max = this.y0 - c.y1 - this.epsilon;
++            if (ya > 0.0F && c.y1 <= y0) {
++               max = y0 - c.y1 - epsilon;
+                if (max < ya) {
+                   ya = max;
+                }
+             }
+ 
+-            if (ya < 0.0F && c.y0 >= this.y1) {
+-               max = this.y1 - c.y0 + this.epsilon;
++            if (ya < 0.0F && c.y0 >= y1) {
++               max = y1 - c.y0 + epsilon;
+                if (max > ya) {
+                   ya = max;
+                }
+@@ -116,19 +187,25 @@
        }
     }
  
@@ -125,9 +185,28 @@
 +    * @return The accepted offset.
 +    */
     public float clipZCollide(AABB c, float za) {
-       if (!(c.x1 <= this.x0) && !(c.x0 >= this.x1)) {
-          if (!(c.y1 <= this.y0) && !(c.y0 >= this.y1)) {
-@@ -143,6 +220,11 @@
+-      if (!(c.x1 <= this.x0) && !(c.x0 >= this.x1)) {
+-         if (!(c.y1 <= this.y0) && !(c.y0 >= this.y1)) {
++      if (!(c.x1 <= x0) && !(c.x0 >= x1)) {
++         if (!(c.y1 <= y0) && !(c.y0 >= y1)) {
+             float max;
+-            if (za > 0.0F && c.z1 <= this.z0) {
+-               max = this.z0 - c.z1 - this.epsilon;
++            if (za > 0.0F && c.z1 <= z0) {
++               max = z0 - c.z1 - epsilon;
+                if (max < za) {
+                   za = max;
+                }
+             }
+ 
+-            if (za < 0.0F && c.z0 >= this.z1) {
+-               max = this.z1 - c.z0 + this.epsilon;
++            if (za < 0.0F && c.z0 >= z1) {
++               max = z1 - c.z0 + epsilon;
+                if (max > za) {
+                   za = max;
+                }
+@@ -143,10 +220,15 @@
        }
     }
  
@@ -137,9 +216,16 @@
 +    * @return If the other collision box intersects this collision box.
 +    */
     public boolean intersects(AABB c) {
-       if (!(c.x1 <= this.x0) && !(c.x0 >= this.x1)) {
-          if (!(c.y1 <= this.y0) && !(c.y0 >= this.y1)) {
-@@ -155,6 +237,12 @@
+-      if (!(c.x1 <= this.x0) && !(c.x0 >= this.x1)) {
+-         if (!(c.y1 <= this.y0) && !(c.y0 >= this.y1)) {
+-            return !(c.z1 <= this.z0) && !(c.z0 >= this.z1);
++      if (!(c.x1 <= x0) && !(c.x0 >= x1)) {
++         if (!(c.y1 <= y0) && !(c.y0 >= y1)) {
++            return !(c.z1 <= z0) && !(c.z0 >= z1);
+          } else {
+             return false;
+          }
+@@ -155,12 +237,18 @@
        }
     }
  
@@ -150,5 +236,17 @@
 +    * @param za The Z coordinate that represents the offset of the current Z coordinate to make the new coordinate.
 +    */
     public void move(float xa, float ya, float za) {
-       this.x0 += xa;
-       this.y0 += ya;
+-      this.x0 += xa;
+-      this.y0 += ya;
+-      this.z0 += za;
+-      this.x1 += xa;
+-      this.y1 += ya;
+-      this.z1 += za;
++      x0 += xa;
++      y0 += ya;
++      z0 += za;
++      x1 += xa;
++      y1 += ya;
++      z1 += za;
+    }
+ }

@@ -1,5 +1,5 @@
 --- Old/com/mojang/minecraft/HitResult.java	2021-07-18 13:06:06.642973700 +0200
-+++ New/com/mojang/minecraft/HitResult.java	2021-07-18 17:22:13.622960900 +0200
++++ New/com/mojang/minecraft/HitResult.java	2021-08-07 19:09:54.792324900 +0200
 @@ -1,12 +1,43 @@
  package com.mojang.minecraft;
  

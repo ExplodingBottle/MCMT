@@ -1,6 +1,6 @@
 --- Old/com/mojang/minecraft/level/tile/Tile.java	2021-07-18 13:06:06.664320600 +0200
-+++ New/com/mojang/minecraft/level/tile/Tile.java	2021-07-18 17:16:56.825698400 +0200
-@@ -7,28 +7,93 @@
++++ New/com/mojang/minecraft/level/tile/Tile.java	2021-08-07 19:26:05.380898200 +0200
+@@ -7,74 +7,161 @@
  import com.mojang.minecraft.renderer.Tesselator;
  import java.util.Random;
  
@@ -94,7 +94,47 @@
     public void render(Tesselator t, Level level, int layer, int x, int y, int z) {
        float c1 = 1.0F;
        float c2 = 0.8F;
-@@ -64,15 +129,37 @@
+       float c3 = 0.6F;
+-      if (this.shouldRenderFace(level, x, y - 1, z, layer)) {
++      if (shouldRenderFace(level, x, y - 1, z, layer)) {
+          t.color(c1, c1, c1);
+-         this.renderFace(t, x, y, z, 0);
++         renderFace(t, x, y, z, 0);
+       }
+ 
+-      if (this.shouldRenderFace(level, x, y + 1, z, layer)) {
++      if (shouldRenderFace(level, x, y + 1, z, layer)) {
+          t.color(c1, c1, c1);
+-         this.renderFace(t, x, y, z, 1);
++         renderFace(t, x, y, z, 1);
+       }
+ 
+-      if (this.shouldRenderFace(level, x, y, z - 1, layer)) {
++      if (shouldRenderFace(level, x, y, z - 1, layer)) {
+          t.color(c2, c2, c2);
+-         this.renderFace(t, x, y, z, 2);
++         renderFace(t, x, y, z, 2);
+       }
+ 
+-      if (this.shouldRenderFace(level, x, y, z + 1, layer)) {
++      if (shouldRenderFace(level, x, y, z + 1, layer)) {
+          t.color(c2, c2, c2);
+-         this.renderFace(t, x, y, z, 3);
++         renderFace(t, x, y, z, 3);
+       }
+ 
+-      if (this.shouldRenderFace(level, x - 1, y, z, layer)) {
++      if (shouldRenderFace(level, x - 1, y, z, layer)) {
+          t.color(c3, c3, c3);
+-         this.renderFace(t, x, y, z, 4);
++         renderFace(t, x, y, z, 4);
+       }
+ 
+-      if (this.shouldRenderFace(level, x + 1, y, z, layer)) {
++      if (shouldRenderFace(level, x + 1, y, z, layer)) {
+          t.color(c3, c3, c3);
+-         this.renderFace(t, x, y, z, 5);
++         renderFace(t, x, y, z, 5);
        }
  
     }
@@ -120,7 +160,8 @@
 +    * @return The texture.
 +    */
     protected int getTexture(int face) {
-       return this.tex;
+-      return this.tex;
++      return tex;
     }
 -
 +   
@@ -133,8 +174,11 @@
 +    * @param face The number of the face that will be rendered.
 +    */
     public void renderFace(Tesselator t, int x, int y, int z, int face) {
-       int tex = this.getTexture(face);
+-      int tex = this.getTexture(face);
++      int tex = getTexture(face);
        float u0 = (float)(tex % 16) / 16.0F;
+       float u1 = u0 + 0.0624375F;
+       float v0 = (float)(tex / 16) / 16.0F;
 @@ -129,6 +216,14 @@
  
     }
@@ -214,3 +258,12 @@
     public void destroy(Level level, int x, int y, int z, ParticleEngine particleEngine) {
        int SD = 4;
  
+@@ -208,7 +341,7 @@
+                float xp = (float)x + ((float)xx + 0.5F) / (float)SD;
+                float yp = (float)y + ((float)yy + 0.5F) / (float)SD;
+                float zp = (float)z + ((float)zz + 0.5F) / (float)SD;
+-               particleEngine.add(new Particle(level, xp, yp, zp, xp - (float)x - 0.5F, yp - (float)y - 0.5F, zp - (float)z - 0.5F, this.tex));
++               particleEngine.add(new Particle(level, xp, yp, zp, xp - (float)x - 0.5F, yp - (float)y - 0.5F, zp - (float)z - 0.5F, tex));
+             }
+          }
+       }

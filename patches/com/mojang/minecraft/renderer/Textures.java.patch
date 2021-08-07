@@ -1,6 +1,6 @@
 --- Old/com/mojang/minecraft/renderer/Textures.java	2021-07-18 13:06:06.667284700 +0200
-+++ New/com/mojang/minecraft/renderer/Textures.java	2021-07-18 17:16:56.841320000 +0200
-@@ -11,7 +11,7 @@
++++ New/com/mojang/minecraft/renderer/Textures.java	2021-08-07 19:20:38.807916900 +0200
+@@ -11,22 +11,22 @@
  import org.lwjgl.util.glu.GLU;
  
  public class Textures {
@@ -9,9 +9,16 @@
  
     public int loadTexture(String resourceName, int mode) {
        try {
-@@ -24,9 +24,9 @@
+          if (this.idMap.containsKey(resourceName)) {
+-            return (Integer)this.idMap.get(resourceName);
++            return this.idMap.get(resourceName);
+          } else {
+             IntBuffer ib = BufferUtils.createIntBuffer(1);
+             ib.clear();
+             GL11.glGenTextures(ib);
              int id = ib.get(0);
-             this.idMap.put(resourceName, id);
+-            this.idMap.put(resourceName, id);
++            idMap.put(resourceName, id);
              System.out.println(resourceName + " -> " + id);
 -            GL11.glBindTexture(3553, id);
 -            GL11.glTexParameteri(3553, 10241, mode);
