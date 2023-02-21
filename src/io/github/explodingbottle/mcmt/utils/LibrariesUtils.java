@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2021  ASCPIAL Group
+ * MCMT - A tool that allows you to modify Minecraft Classic
+ * Copyright (C) 2021  ExplodingBottle
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,16 +14,16 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-package io.github.ascpialgroup.mcmt.utils;
+package io.github.explodingbottle.mcmt.utils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.ascpialgroup.mcmt.MCMTMain;
+import io.github.explodingbottle.mcmt.MCMTMain;
 
 public class LibrariesUtils {
 	public static String downloadLibraries(String libsInfo) throws IOException {

@@ -1,4 +1,4 @@
-package io.github.ascpialgroup.mcmt;
+package io.github.explodingbottle.mcmt;
 
 import java.lang.reflect.Field;
 

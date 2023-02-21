@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2021  ASCPIAL Group
+ * MCMT - A tool that allows you to modify Minecraft Classic
+ * Copyright (C) 2021  ExplodingBottle
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,13 +14,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-package io.github.ascpialgroup.mcmt.managers;
+package io.github.explodingbottle.mcmt.managers;
 
 import java.io.File;
 
-import io.github.ascpialgroup.mcmt.MCMTMain;
+import io.github.explodingbottle.mcmt.MCMTMain;
 
 public class FilesManager {
 
@@ -32,7 +33,7 @@ public class FilesManager {
 	public File nativesFolder;
 	public File patchesFolder;
 	public File additionsFolder;
-	
+
 	public FilesManager() {
 		sourcesPath = new File(MCMTMain.configuration.sourcesPath);
 		binariesPath = new File(MCMTMain.configuration.binariesPath);

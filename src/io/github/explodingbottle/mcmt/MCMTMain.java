@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2021  ASCPIAL Group
+ * MCMT - A tool that allows you to modify Minecraft Classic
+ * Copyright (C) 2021  ExplodingBottle
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,9 +14,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-package io.github.ascpialgroup.mcmt;
+package io.github.explodingbottle.mcmt;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -36,14 +37,15 @@ import java.util.logging.Logger;
 import difflib.DiffUtils;
 import difflib.Patch;
 import difflib.PatchFailedException;
-import io.github.ascpialgroup.mcmt.config.ConfigurationObject;
-import io.github.ascpialgroup.mcmt.config.ConfigurationProvider;
-import io.github.ascpialgroup.mcmt.managers.FilesManager;
-import io.github.ascpialgroup.mcmt.utils.LibrariesUtils;
-import io.github.ascpialgroup.mcmt.utils.NetworkUtils;
-import io.github.ascpialgroup.mcmt.utils.OperatingSystem;
-import io.github.ascpialgroup.mcmt.utils.OperatingSystemUtils;
-import io.github.ascpialgroup.mcmt.utils.ZipUtils;
+import io.github.explodingbottle.explodingau.ExplodingAULib;
+import io.github.explodingbottle.mcmt.config.ConfigurationObject;
+import io.github.explodingbottle.mcmt.config.ConfigurationProvider;
+import io.github.explodingbottle.mcmt.managers.FilesManager;
+import io.github.explodingbottle.mcmt.utils.LibrariesUtils;
+import io.github.explodingbottle.mcmt.utils.NetworkUtils;
+import io.github.explodingbottle.mcmt.utils.OperatingSystem;
+import io.github.explodingbottle.mcmt.utils.OperatingSystemUtils;
+import io.github.explodingbottle.mcmt.utils.ZipUtils;
 
 public class MCMTMain {
 
@@ -54,6 +56,12 @@ public class MCMTMain {
 		Logger mainLogger = Logger.getLogger(MCMTMain.class.getName());
 		mainLogger.log(Level.INFO, "Logger initialized !");
 		mainLogger.log(Level.INFO, "MCMT - Version " + MCMTVersion.MCMT_VERSION);
+
+		// ExplodingAULib Integration
+		mainLogger.log(Level.INFO, "Querying ExplodingAU...");
+		ExplodingAULib.standardProgramRoutine("MCMT");
+		mainLogger.log(Level.INFO, "ExplodingAU queried.");
+
 		OperatingSystem os = OperatingSystemUtils.getOperatingSystem();
 		mainLogger.log(Level.INFO, "Operating system is " + os.toString());
 		if (os == OperatingSystem.UNKNOWN) {
